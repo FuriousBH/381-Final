@@ -6,4 +6,4 @@ Figure1:
 Figure2:
 ![Figure 2](https://user-images.githubusercontent.com/99046455/201501600-b4b37d5f-a2fd-4a0d-b16f-7fe3e2b0f846.png)
 Figure3:
-![Figure 3](https://user-images.githubusercontent.com/99046455/201501601-6f20574a-76b8-4f0d-b2b1-3a19f117ec66.png)
+![Figure 3](https://user-images.githubusercontent.com/99046455/201501730-9e92ac8c-5565-490a-b43e-2deee8c18a24.png)
