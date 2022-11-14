@@ -1,10 +1,10 @@
 ### teams Bot ###
-from webexteamsbot import TeamsBot
-from webexteamsbot.models import Response
 ### Utilities Libraries
 import routers
-import useless_skills as useless
 import useful_skills as useful
+import useless_skills as useless
+from webexteamsbot import TeamsBot
+from webexteamsbot.models import Response
 
 # Router Info 
 device_address = routers.router['host']
@@ -20,7 +20,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://ae5f-66-188-182-24.ngrok.io"
+bot_url = "https://893b-66-188-182-24.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -114,17 +114,24 @@ def get_inf_acl(incoming_msg):
     
     return response
 
+"""
 def get_dhcp_info(incoming_msg):
     response = Response()
-    dhcp = useful.get_dhcp_info(url_base, headers, device_username, device_password)
+    dhcp = useful.get_dhcp_info(url_base, headers,device_username,device_password)
     
-    if len(dhcp) == 0:
-        response.markdown = "Now DHCP info"
-    else:
-        response.markdown = dhcp
+    #response.markdown += "* This is to test that we got what we expected {} {}.\n\n".format(
+    #    dhcp['if-name'],
+    #    dhcp['client-addr'],
+    #    dhcp['lease-server-addr']
+    #)
     
-    return response
+    #return response
 # Set the bot greeting.
+"""
+def get_dhcp_info(incoming_msg):
+    dhcp = useful.get_dhcp_info(url_base, headers,device_username,device_password)
+    
+    return dhcp
 bot.set_greeting(greeting)
 
 # Add Bot's Commmands

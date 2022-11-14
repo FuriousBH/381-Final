@@ -4,6 +4,7 @@ import myparamiko as m
 ### For RESTCONF
 import requests
 import json
+import urllib3
 
 def get_arp(url_base,headers,username,password):
     url = url_base + "/data/Cisco-IOS-XE-arp-oper:arp-data/"
@@ -54,8 +55,16 @@ def get_acl_lists(url_base, headers, username, password):
                             headers=headers,
                             verify=False
                             )
-    return response.json()["Cisco-IOS-XE-acl-oper:access-lists"]["access-list"]
+    return response.json()["Cisco-IOS-XE-acl-oper:access-lists"]
 
+# Test Get DHCP Information
+def get_dhcp_info(url_base, headers, username, password):
+    http = urllib3.PoolManager()
+    url = url_base + "data/Cisco-IOS-XE-dhcp-oper:dhcp-oper-data"
+    response = http.request('GET', url)
+    return response.data.decode('utf-8')
+"""
+# Get DHCP Information
 def get_dhcp_info(url_base, headers, username, password):
     url = url_base + "data/Cisco-IOS-XE-dhcp-oper:dhcp-oper-data"
     
@@ -64,8 +73,8 @@ def get_dhcp_info(url_base, headers, username, password):
                             headers=headers,
                             verify=False
                             )
-    return response.json()["Cisco-IOS-XE-dhcp-oper:dhcp-oper-data"]["dhcpv4-client-oper"]
-
+    return response.json()["Cisco-IOS-XE-dhcp-oper:dhcp-oper-data"]['dhcpv4-client-oper']
+"""
 if __name__ == "__main__":
     import routers
     # Router Info 
