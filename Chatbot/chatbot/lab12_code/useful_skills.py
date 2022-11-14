@@ -44,6 +44,27 @@ def get_configured_interfaces(url_base,headers,username,password):
                             )
     return response.json()["ietf-interfaces:interfaces"]["interface"]
 
+# A function to show IP protocols on the device
+def get_acl_lists(url_base, headers, username, password):
+    url = url_base + "data/Cisco-IOS-XE-acl-oper:access-lists"
+    
+    # this statement performs a GET on the specified URL
+    response = requests.get(url,
+                            auth=(username, password),
+                            headers=headers,
+                            verify=False
+                            )
+    return response.json()["Cisco-IOS-XE-acl-oper:access-lists"]["access-list"]
+
+def get_dhcp_info(url_base, headers, username, password):
+    url = url_base + "data/Cisco-IOS-XE-dhcp-oper:dhcp-oper-data"
+    
+    response = requests.get(url,
+                            auth=(username, password),
+                            headers=headers,
+                            verify=False
+                            )
+    return response.json()["Cisco-IOS-XE-dhcp-oper:dhcp-oper-data"]["dhcpv4-client-oper"]
 
 if __name__ == "__main__":
     import routers

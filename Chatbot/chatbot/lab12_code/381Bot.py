@@ -20,7 +20,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://1638-66-188-182-24.ngrok.io"
+bot_url = "https://ae5f-66-188-182-24.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -100,10 +100,38 @@ def get_int_ips(incoming_msg):
             response.markdown +="IP Address: UNCONFIGURED\n"
     return response
 
+def get_inf_acl(incoming_msg):
+    response = Response()
+    acls = useful.get_acl_lists(url_base, headers, device_username, device_password)
+    
+    if len(acls) == 0:
+        response.markdown = "There is no ACL"
+    else:
+        for acl in acls:
+            response.markdown += "* A ACL named {} type {}.\n".format(
+                acl['name'], acl['type']
+            )
+    
+    return response
+
+def get_dhcp_info(incoming_msg):
+    response = Response()
+    dhcp = useful.get_dhcp_info(url_base, headers, device_username, device_password)
+    
+    if len(dhcp) == 0:
+        response.markdown = "Now DHCP info"
+    else:
+        response.markdown = dhcp
+    
+    return response
 # Set the bot greeting.
 bot.set_greeting(greeting)
 
 # Add Bot's Commmands
+bot.add_command(
+    "dhcp info", "See DHCP information", get_dhcp_info)
+bot.add_command(
+    "acl info", "See acl information", get_inf_acl)
 bot.add_command(
     "arp list", "See what ARP entries I have in my table.", arp_list)
 bot.add_command(

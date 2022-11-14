@@ -1,0 +1,10 @@
+This application requires 
+!sudo apt install ngrok
+!pip3 install webexteamssdk
+!pip3 install webexteamsbot
+!pip3 install myparamiko
+
+Ansible
+Flask
+
+A Cisco WebeX Teams membership
