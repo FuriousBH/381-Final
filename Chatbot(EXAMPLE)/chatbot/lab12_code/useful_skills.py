@@ -6,6 +6,8 @@ import requests
 import json
 import urllib3
 
+from requests.auth import HTTPBasicAuth
+
 def get_arp(url_base,headers,username,password):
     url = url_base + "/data/Cisco-IOS-XE-arp-oper:arp-data/"
 
@@ -55,26 +57,27 @@ def get_acl_lists(url_base, headers, username, password):
                             headers=headers,
                             verify=False
                             )
-    return response.json()["Cisco-IOS-XE-acl-oper:access-lists"]
+    
+    return response.json()["Cisco-IOS-XE-acl-oper:access-lists"]['access-list']
 
 # Test Get DHCP Information
-def get_dhcp_info(url_base, headers, username, password):
-    http = urllib3.PoolManager()
-    url = url_base + "data/Cisco-IOS-XE-dhcp-oper:dhcp-oper-data"
-    response = http.request('GET', url)
-    return response.data.decode('utf-8')
-"""
+
 # Get DHCP Information
-def get_dhcp_info(url_base, headers, username, password):
-    url = url_base + "data/Cisco-IOS-XE-dhcp-oper:dhcp-oper-data"
-    
+
+def get_dhcp_info(url_base,headers,username,password):
+    url = url_base + "/data/Cisco-IOS-XE-dhcp-oper:dhcp-oper-data/dhcpv4-client-oper"
+
+    # this statement performs a GET on the specified url
     response = requests.get(url,
                             auth=(username, password),
                             headers=headers,
                             verify=False
                             )
-    return response.json()["Cisco-IOS-XE-dhcp-oper:dhcp-oper-data"]['dhcpv4-client-oper']
-"""
+
+    # return the json as text
+    return response.json()["Cisco-IOS-XE-dhcp-oper:dhcpv4-client-oper"]
+
+
 if __name__ == "__main__":
     import routers
     # Router Info 

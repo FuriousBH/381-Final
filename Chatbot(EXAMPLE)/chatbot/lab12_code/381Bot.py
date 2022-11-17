@@ -20,7 +20,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://893b-66-188-182-24.ngrok.io"
+bot_url = "https://538a-66-188-182-24.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -108,30 +108,29 @@ def get_inf_acl(incoming_msg):
         response.markdown = "There is no ACL"
     else:
         for acl in acls:
-            response.markdown += "* A ACL named {} type {}.\n".format(
-                acl['name'], acl['type']
+            response.markdown += "* A ACL named {}.\n".format(
+                acl['access-control-list-name'][0]['access-list-entries']['access-list-entry'][0]['rule-name']
             )
     
     return response
 
-"""
+
 def get_dhcp_info(incoming_msg):
     response = Response()
-    dhcp = useful.get_dhcp_info(url_base, headers,device_username,device_password)
+    dhcp_inf = useful.get_dhcp_info(url_base, headers, device_username, device_password)
+    if len(dhcp_inf) == 0:
+        response.markdown = "I don't have any information of this device"
+    else:
+        response.markdown = "Here is the device system information I know. \n\n"
+        response.markdown += "Device type: {}.\nSerial-number: {}.\nCPU Type:{}\n\nSoftware Version:{}\n".format(
+            dhcp_inf['if-name'], 
+            dhcp_inf['client-addr'], 
+            dhcp_inf['lease-server-addr']
+            )
     
-    #response.markdown += "* This is to test that we got what we expected {} {}.\n\n".format(
-    #    dhcp['if-name'],
-    #    dhcp['client-addr'],
-    #    dhcp['lease-server-addr']
-    #)
-    
-    #return response
-# Set the bot greeting.
-"""
-def get_dhcp_info(incoming_msg):
-    dhcp = useful.get_dhcp_info(url_base, headers,device_username,device_password)
-    
-    return dhcp
+    return response
+
+
 bot.set_greeting(greeting)
 
 # Add Bot's Commmands
