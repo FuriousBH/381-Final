@@ -1,7 +1,7 @@
 ### teams Bot ###
 ### Utilities Libraries
 import routers
-import routers as router
+import pull_skills as useful
 from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
 
@@ -19,7 +19,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://538a-66-188-182-24.ngrok.io"
+bot_url = "https://27ab-66-188-182-24.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -35,7 +35,44 @@ bot = TeamsBot(
         {"resource": "attachmentActions", "event": "created"},],
 )
 
+# A standard greeting
+def greeting(incoming_msg):
+    # Loopkup details about sender
+    sender = bot.teams.people.get(incoming_msg.personId)
 
+    # Create a Response object and craft a reply in Markdown.
+    response = Response()
+    response.markdown = "Hello {}, I'm a friendly CSR1100v assistant .  ".format(
+        sender.firstName
+    )
+    response.markdown += "\n\nSee what I can do by asking for **/help**."
+    return response
+
+# Show the Interfaces on the Router
+def get_int_ips(incoming_msg):
+    response = Response()
+    intf_list = useful.get_configured_interfaces(url_base, headers,device_username,device_password)
+
+    if len(intf_list) == 0:
+        response.markdown = "I don't have any information of this device"
+    else:
+        response.markdown = "Here is the list of interfaces with IPs I know. \n\n"
+    for intf in intf_list:
+        response.markdown +="*Name:{}\n" .format(intf["name"])
+        try:
+            response.markdown +="IP Address:{}\{}\n".format(intf["ietf-ip:ipv4"]["address"][0]["ip"],
+                                intf["ietf-ip:ipv4"]["address"][0]["netmask"])
+        except KeyError:
+            response.markdown +="IP Address: UNCONFIGURED\n"
+    return response
+
+# Set the Bot's greeting
+bot.set_greeting(greeting)
+
+# Add Bot's Commands
+
+bot.add_command(
+    "show interfaces", "List all interfaces and their IP addresses", get_int_ips)
 
 if __name__ == "__main__":
     # Run Bot

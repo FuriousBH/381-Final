@@ -6,7 +6,17 @@ import requests
 import json
 import urllib3
 
+# Function for looking at configured Interfaces
+def get_configured_interfaces(url_base,headers,username,password):
+    url = url_base + "/data/ietf-interfaces:interfaces"
 
+    # this statement performs a GET on the specified url
+    response = requests.get(url,
+                            auth=(username, password),
+                            headers=headers,
+                            verify=False
+                            )
+    return response.json()["ietf-interfaces:interfaces"]["interface"]
 
 
 if __name__ == "__main__":
