@@ -2,7 +2,7 @@
 ### Utilities Libraries
 import routers
 import pull_skills as useful
-import Chatbot.mod_skills as usefulP
+import Chatbot.mod_skillsBACKUP1 as usefulP
 from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
 
@@ -20,7 +20,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://b556-66-188-182-24.ngrok.io"
+bot_url = "https://27ab-66-188-182-24.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -76,8 +76,13 @@ def push_new_int(incoming_msg):
     ip = "11.1.1.1"
     netmask = "255.255.255.0"
     new_int = usefulP.push_int(url_base,
+                               device_username, 
+                               device_password,
+                               headers,
                                name, 
                                description, 
+                               type, 
+                               enabled, 
                                ip, 
                                netmask)
     
