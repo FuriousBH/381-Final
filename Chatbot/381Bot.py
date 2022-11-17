@@ -2,7 +2,7 @@
 ### Utilities Libraries
 import routers
 import pull_skills as useful
-import Chatbot.mod_skills as usefulP
+import mod_skills as usefulP
 from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
 
@@ -80,17 +80,24 @@ def push_new_int(incoming_msg):
                                description, 
                                ip, 
                                netmask)
-    
     return new_int.text
+
+# Delete an interface
+def do_delete_interface(incoming_msg):
+    """Placeholder for me until I figure out how to take a string and parse """
+    input = incoming_msg
+
+    return input
 # Set the Bot's greeting
 bot.set_greeting(greeting)
 
 # Add Bot's Commands
-
+bot.add_command(
+    "delete int", "Delete an interface", do_delete_interface)
 bot.add_command(
     "show interfaces", "List all interfaces and their IP addresses", get_int_ips)
 bot.add_command(
-    "new in", "Use PUSH to add a new interface", push_new_int)
+    "new int", "Use PUSH to add a new interface", push_new_int)
 
 if __name__ == "__main__":
     # Run Bot

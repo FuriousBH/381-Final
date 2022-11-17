@@ -10,6 +10,7 @@ from requests.auth import HTTPBasicAuth
 
 # Skills for pushing configs
 
+# Adding an interface
 def push_int(url, name, description, ip, netmask):
     """Function to push a change using RESTCONF"""
     url = url + "/data/ietf-interfaces:interfaces/interface=Loopback2"
@@ -42,4 +43,5 @@ def push_int(url, name, description, ip, netmask):
     
     return response
 
-
+def delete_int(url,):
+    """Function to delete an interface"""
