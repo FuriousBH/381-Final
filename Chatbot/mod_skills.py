@@ -11,14 +11,14 @@ from requests.auth import HTTPBasicAuth
 # Skills for pushing configs
 
 # Adding an interface
-def push_int(url, name, description, ip, netmask):
+def push_int(url, name, ip, netmask):
     """Function to push a change using RESTCONF"""
-    url = url + "/data/ietf-interfaces:interfaces/interface=Loopback2"
+    url = url + "/data/ietf-interfaces:interfaces/interface="+name
     
     payload = {
         "ietf-interfaces:interface": {
             "name": name,
-            "description": description,
+            "description": "TEST DESCRIPTION",
             "type": "iana-if-type:softwareLoopback",
             "enabled": "true",
             "ietf-ip:ipv4": {
@@ -40,6 +40,7 @@ def push_int(url, name, description, ip, netmask):
                               auth=AUTH,
                               data=json.dumps(payload),
                               verify=False)
+    print("SUCCESS")
     
     return response
 
