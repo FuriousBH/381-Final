@@ -13,7 +13,7 @@ from requests.auth import HTTPBasicAuth
 # Adding an interface
 def push_int(url, name, ip, netmask):
     """Function to push a change using RESTCONF"""
-    url = url + "/data/ietf-interfaces:interfaces/interface="+name
+    url = url + "/data/ietf-interfaces:interfaces/interface=" + name
     
     payload = {
         "ietf-interfaces:interface": {
@@ -44,5 +44,17 @@ def push_int(url, name, ip, netmask):
     
     return response
 
-def delete_int(url,):
+def delete_int(url, name):
     """Function to delete an interface"""
+    url = url + "/data/ietf-interfaces:interfaces/interface=" + name
+    
+    payload = {}
+    headers = {'Content-Type': 'application/yang-data+json', 'Accept': 'application/yang-data+json'}
+    AUTH = HTTPBasicAuth('cisco', 'cisco123!')
+    
+    response = requests.delete(url,
+                               headers=headers,
+                               auth=AUTH,
+                               data=json.dumps(payload),
+                               verify=False)
+    return response

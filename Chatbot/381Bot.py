@@ -21,7 +21,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://3a92-66-188-182-24.ngrok.io"
+bot_url = "https://5eca-66-188-182-24.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -68,59 +68,30 @@ def get_int_ips(incoming_msg):
             response.markdown +="IP Address: UNCONFIGURED\n"
     return response
 
-"""
-# Push a new interface to the Router
-def push_new_int(incoming_msg):
+def delete_int(incoming_msg):
+    """Delete an interface. Use 
+    delete int 'int name'"""
     response = Response()
-    name = "Loopback2"
-    description = "Test Push LO2"
-    type = "iana-if-type:softwareLoopback"
-    enabled = True
-    ip = "11.1.1.1"
-    netmask = "255.255.255.0"
-    new_int = usefulP.push_int(url_base,
-                               name, 
-                               description, 
-                               ip, 
-                               netmask)
-    response.markdown = f"Creating interface: {name}\nDescription: {description}\nIP: {ip}\nNetmask: {netmask}"
-    return response
-"""
-
-
-
-# Delete an interface
-def do_delete_interface(incoming_msg):
-    """Placeholder for me until I figure out how to take a string and parse """
-    response = Response()
-    input = incoming_msg.text
-
-    if input == "delete int":
-        response.markdown = "Please enter...."
-    else:
-        response.markdown = "Now we can get down to business..\n"
-        input = input[10:]
-        response.markdown += input
     
+    name = incoming_msg.text
+    name = name[11:]
+    
+    usefulP.delete_int(url_base, name)
+    response.markdown += "Deleted interface " + name 
     return response
 
-
-
-def card_test(incoming_msg):
-    """Testing out the card system. It will be far superior to just making blanket inputs"""
-    
 # Set the Bot's greeting
 bot.set_greeting(greeting)
 
 # Add Bot's Commands
 bot.add_command(
-    "delete int", "Delete an interface", do_delete_interface)
-bot.add_command(
     "show interfaces", "List all interfaces and their IP addresses", get_int_ips)
 # bot.add_command(
     # "new int", "Use PUSH to add a new interface", push_new_int)
 bot.add_command("attachmentActions", "*", usefulC.handle_cards)
-bot.add_command("showcard", "show an adaptive card", usefulC.show_card)
+bot.add_command("make int", "show an adaptive card", usefulC.show_card)
+bot.add_command("delete int", "Delete an interface. 'delete int int_name'", delete_int)
+
 
 if __name__ == "__main__":
     # Run Bot
