@@ -8,8 +8,8 @@ import mod_skills as usefulP
 
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
 
-def show_card(incoming_msg):
-    attachment = open("interfacecard.json").read()
+def show_make_int_card(incoming_msg):
+    attachment = open("./Cards/interfacecard.json").read()
     backupmessage = "You have an assignment!!!"
 
     c = create_message_with_attachment(
@@ -20,7 +20,7 @@ def show_card(incoming_msg):
 
 
 # An example of how to process card actions
-def handle_cards(api, incoming_msg):
+def handle_make_int_card(api, incoming_msg):
     """
     Function to handle card actions.
     :param api: webexteamssdk object
@@ -28,7 +28,7 @@ def handle_cards(api, incoming_msg):
     :return: A text or markdown based reply
     """
     m = get_attachment_actions(incoming_msg["data"]["id"])
-    meeting = open("interfacecard.json").read()
+    meeting = open("./Cards/interfacecard.json").read()
     meeting = json.loads(meeting)
     # #print(meeting['content']['body'][0]['text'])
     usefulP.push_int(url='https://192.168.56.106/restconf',name=m['inputs']['name'], 

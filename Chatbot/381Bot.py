@@ -68,7 +68,6 @@ def get_int_ips(incoming_msg):
             response.markdown +="IP Address: UNCONFIGURED\n"
     return response
 
-
 def delete_int(incoming_msg):
     """Delete an interface. Use 
     delete int 'int name'"""
@@ -77,7 +76,7 @@ def delete_int(incoming_msg):
     name = incoming_msg.text
     name = name[11:]
     
-    usefulP.delete_int(url_base, name)
+    usefulP.delete_int(url_base, name, device_username, device_password)
     response.markdown += "Deleted interface " + name 
     return response
 
@@ -89,9 +88,8 @@ bot.add_command(
     "show interfaces", "List all interfaces and their IP addresses", get_int_ips)
 # bot.add_command(
     # "new int", "Use PUSH to add a new interface", push_new_int)
-bot.add_command("test", "Testing for adaptive card", usefulC.adaptive_card_test)
-bot.add_command("attachmentActions", "*", usefulC.handle_cards)
-bot.add_command("make int", "show an adaptive card", usefulC.show_card)
+bot.add_command("attachmentActions", "*", usefulC.handle_make_int_card)
+bot.add_command("make int", "show an adaptive card", usefulC.show_make_int_card)
 bot.add_command("delete int", "Delete an interface. 'delete int int_name'", delete_int)
 
 

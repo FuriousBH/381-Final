@@ -32,7 +32,6 @@ def push_int(url, name, ip, netmask):
             "ietf-ip:ipv6": {}
         }
     }
-
     headers = {'Content-Type': 'application/yang-data+json', 'Accept': 'application/yang-data+json'}
     AUTH = HTTPBasicAuth('cisco', 'cisco123!')
     response = requests.put(url,
@@ -44,17 +43,16 @@ def push_int(url, name, ip, netmask):
     
     return response
 
-def delete_int(url, name):
+def delete_int(url, name, username, password):
     """Function to delete an interface"""
     url = url + "/data/ietf-interfaces:interfaces/interface=" + name
     
     payload = {}
     headers = {'Content-Type': 'application/yang-data+json', 'Accept': 'application/yang-data+json'}
-    AUTH = HTTPBasicAuth('cisco', 'cisco123!')
     
     response = requests.delete(url,
                                headers=headers,
-                               auth=AUTH,
+                               auth=(username, password),
                                data=json.dumps(payload),
                                verify=False)
-    return response
+    return ""
