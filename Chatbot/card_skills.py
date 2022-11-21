@@ -1,5 +1,6 @@
 from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
+from adaptivecardbuilder import *
 import time
 import json
 import requests
@@ -17,6 +18,7 @@ def show_card(incoming_msg):
     print(c)
     return ""
 
+
 # An example of how to process card actions
 def handle_cards(api, incoming_msg):
     """
@@ -32,7 +34,6 @@ def handle_cards(api, incoming_msg):
     usefulP.push_int(url='https://192.168.56.106/restconf',name=m['inputs']['name'], 
                      ip=m['inputs']['ip'],
                      netmask=m['inputs']['netmask'])
-    time.sleep(1)
     return "New Interface Configured: {},\n {},\n {}".format(m["inputs"]["name"],
                                                     m['inputs']['ip'],
                                                     m['inputs']['netmask'])

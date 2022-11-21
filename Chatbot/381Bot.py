@@ -21,7 +21,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://5eca-66-188-182-24.ngrok.io"
+bot_url = "https://261f-66-188-182-24.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -68,6 +68,7 @@ def get_int_ips(incoming_msg):
             response.markdown +="IP Address: UNCONFIGURED\n"
     return response
 
+
 def delete_int(incoming_msg):
     """Delete an interface. Use 
     delete int 'int name'"""
@@ -88,6 +89,7 @@ bot.add_command(
     "show interfaces", "List all interfaces and their IP addresses", get_int_ips)
 # bot.add_command(
     # "new int", "Use PUSH to add a new interface", push_new_int)
+bot.add_command("test", "Testing for adaptive card", usefulC.adaptive_card_test)
 bot.add_command("attachmentActions", "*", usefulC.handle_cards)
 bot.add_command("make int", "show an adaptive card", usefulC.show_card)
 bot.add_command("delete int", "Delete an interface. 'delete int int_name'", delete_int)
