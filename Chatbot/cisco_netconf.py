@@ -4,12 +4,13 @@ from jinja2 import Environment, FileSystemLoader
 from ncclient import manager
 import routers
 # Add subscriptions.yml to router configs found in routers.py
-def main():
+# def main():
+def setup():
     """
     Execution begins here.
     """
     # File load
-    with open("subscriptions.yml","r") as handle:
+    with open("inputs.yml","r") as handle:
         data = safe_load(handle)
 
     # Jinja2 Connection
@@ -22,14 +23,15 @@ def main():
 
     #Netconf Management'
     with manager.connect(**routers.router) as conn:
-        print("NETCONF session connected")
+        netconf_conn=("NETCONF session connected")
 
         # Peform updates and print success
         config_resp = conn.edit_config(target="running", config=new_config)
         if config_resp.ok:
-            print(f"Added {len(data['subscriptions'])} subcriptions")
+            sub_resp=(f"Added {len(data['subscriptions'])} subcriptions")
         
-    print("NETCONF session disconnected")
+    netconf_disc=("NETCONF session disconnected")
+    return(netconf_conn, sub_resp,netconf_disc)
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

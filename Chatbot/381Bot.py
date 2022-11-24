@@ -79,7 +79,27 @@ def delete_int(incoming_msg):
     usefulP.delete_int(url_base, name, device_username, device_password)
     response.markdown += "Deleted interface " + name 
     return response
+# NEW - MDT - IMPORT
+def config_telemetry(incoming_msg):
+    response = Response()
+    status_msg=telemetry.setup()
 
+    response.markdown = (f"{status_msg}")
+    return response
+def start_mdt(incoming_msg):
+    response = Response()
+    status_msg=docker.Docker_Check()
+    status_msg+=docker.Docker_Run()
+
+    response.markdown = (f"{status_msg}")
+    return response
+def stop_mdt(incoming_msg):
+    response = Response()
+    status_msg=docker.Docker_Cleanup()
+    
+    response.markdown = (f"{status_msg}")
+    return response
+# END MDT
 # Set the Bot's greeting
 bot.set_greeting(greeting)
 
@@ -91,6 +111,11 @@ bot.add_command(
 bot.add_command("attachmentActions", "*", usefulC.handle_make_int_card)
 bot.add_command("make int", "show an adaptive card", usefulC.show_make_int_card)
 bot.add_command("delete int", "Delete an interface. 'delete int int_name'", delete_int)
+# NEW MDT
+bot.add_command("add telemetry","Add responders to Router",config_telemetry)
+bot.add_command("start mdt","Starts monitor webpage at http://localhost:3000",start_mdt)
+bot.add_command("stop mdt","Stops monitor webpage the server http://localhost:3000",stop_mdt)
+# END MDT
 
 
 if __name__ == "__main__":
