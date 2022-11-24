@@ -4,6 +4,7 @@ import routers
 import pull_skills as useful
 import mod_skills as usefulP
 import card_skills as usefulC
+import docker_run as docker
 from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
 
@@ -21,7 +22,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://ee3a-66-188-182-24.ngrok.io"
+bot_url = "https://6213-66-188-182-24.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -80,6 +81,33 @@ def delete_int(incoming_msg):
     response.markdown += "Deleted interface " + name 
     return response
 
+# Commands for interacting with Docker
+def check_docker(incoming_msg):
+    """Makes use of Keith's lib. Nothing to add atm"""
+    response = Response()
+    check = docker.Docker_Check()
+
+    response.markdown = f"{check}"
+    
+    return response
+
+def run_docker(incoming_msg):
+    """Keith's Docker stuff, just testing atm"""
+    response = Response()
+    run = docker.Docker_Run()
+    response.markdown = f"{run}"
+    
+    return response
+
+def cleanup_docker(incoming_msg):
+    """Keith's Docker Stuff, just testing"""
+    response = Response()
+    container_id = docker.Docker_Cleanup()
+    
+    response.markdown = f"Shut down {container_id}"
+    
+    return response
+
 # Set the Bot's greeting
 bot.set_greeting(greeting)
 
@@ -88,6 +116,9 @@ bot.add_command(
     "show interfaces", "List all interfaces and their IP addresses", get_int_ips)
 # bot.add_command(
     # "new int", "Use PUSH to add a new interface", push_new_int)
+bot.add_command("check docker", "Check Docker image", check_docker)
+bot.add_command("run docker", "Runs the docker image jeremycohoe/tig_mdt", run_docker)
+bot.add_command("clean docker", "Stops docker, and removes the container", cleanup_docker)
 bot.add_command("attachmentActions", "*", usefulC.handle_make_int_card)
 bot.add_command("make int", "show an adaptive card", usefulC.show_make_int_card)
 bot.add_command("delete int", "Delete an interface. 'delete int int_name'", delete_int)

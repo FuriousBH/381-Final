@@ -1,0 +1,16 @@
+subscriptions:
+
+  # Used to monitor IPv4 address
+  102:
+    xpath: "/interfaces-ios-xe-oper:interfaces/interface"
+    period: 1000
+    rx:
+      ip: "192.168.56.128" # Replace with your VM IP 
+      tcp_port: 57500
+  # Unsure yet
+  103:
+    xpath: "/if:interfaces-state/if:interface"
+    period: 1000
+    rx:
+      ip: "192.168.56.128" # Replace with your VM IP 
+      tcp_port: 57500
