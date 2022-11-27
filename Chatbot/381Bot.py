@@ -8,6 +8,7 @@ import docker_run as docker
 import myparamiko as paramiko
 from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
+from datetime import date
 
 device_username = routers.credentials['username']
 device_password = routers.credentials['password']
@@ -73,6 +74,21 @@ def get_int_ips(incoming_msg):
             response.markdown +="IP Address: UNCONFIGURED\n"
     return response
 
+# Function for pulling the running configuration
+def show_run_config(incoming_msg):
+    """Use paramiko to show the running configuration, and print add it to a directory"""
+    response = Response()
+    today = date.today()
+    name = str(r1_address) + str(today)
+    
+    f = open('Outputs/'+name , 'w')
+    ssh_client = paramiko.connect(r1_address, 22, device_username, device_password)
+    shell = paramiko.get_shell(ssh_client)
+    response = paramiko.show(shell, "show run")
+    f.writelines([response])
+    
+    return response
+    
 def delete_int(incoming_msg):
     """Delete an interface. Use 
     delete int 'int name'"""
@@ -124,7 +140,7 @@ bot.add_command("clean docker", "Stops docker, and removes the container", clean
 bot.add_command("attachmentActions", "*", usefulC.handle_make_int_card)
 bot.add_command("make int", "show an adaptive card", usefulC.show_make_int_card)
 bot.add_command("delete int", "Delete an interface. 'delete int int_name'", delete_int)
-
+bot.add_command("show run", "Shows the running configuration of router", show_run_config)
 
 if __name__ == "__main__":
     # Run Bot
