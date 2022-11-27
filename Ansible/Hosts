@@ -1,0 +1,13 @@
+[branch]
+BranchRouter ansible_host=0.0.0.0
+
+[branch:vars]
+ansible_connection=network_cli
+ansible_user=cisco
+ansible_password=cisco
+ansible_port=22
+ansible_network_os=ios
+ansible_python_interpreter=/usr/bin/python3
+ansible_become=yes
+ansible_become_method=enable
+ansible_become_pass=cisco
