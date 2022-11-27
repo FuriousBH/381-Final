@@ -1,0 +1,17 @@
+crypto isakmp policy 1
+ encryption 3des
+ hash md5
+ authentication pre-share
+ group 2
+crypto isakmp key cisco address 172.16.0.4
+!
+!
+crypto ipsec transform-set tran1 esp-3des esp-md5-hmac 
+ mode tunnel
+!
+!
+!
+crypto map Crypt 10 ipsec-isakmp 
+set peer 172.16.0.4
+ set transform-set tran1 
+ match address VPN-ACL
