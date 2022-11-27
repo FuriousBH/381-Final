@@ -3,9 +3,9 @@
 import routers
 import pull_skills as useful
 import mod_skills as usefulP
-import card_skills as usefulC
+import make_int_card_skills as make_int_card
+import router_select_card_skills as router_select_card
 import docker_run as docker
-import myparamiko as paramiko
 from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
 
@@ -26,7 +26,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://07e4-66-188-182-24.ngrok.io"
+bot_url = "https://0ae0-66-188-182-24.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -54,6 +54,7 @@ def greeting(incoming_msg):
     )
     response.markdown += "\n\nSee what I can do by asking for **/help**."
     return response
+
 
 # Show the Interfaces on the Router
 def get_int_ips(incoming_msg):
@@ -118,11 +119,12 @@ bot.set_greeting(greeting)
 # Add Bot's Commands
 bot.add_command(
     "show interfaces", "List all interfaces and their IP addresses", get_int_ips)
+bot.add_command("test", "Testing router select card", router_select_card.select_router_card)
 bot.add_command("check docker", "Check Docker image", check_docker)
 bot.add_command("run docker", "Runs the docker image jeremycohoe/tig_mdt", run_docker)
 bot.add_command("clean docker", "Stops docker, and removes the container", cleanup_docker)
-bot.add_command("attachmentActions", "*", usefulC.handle_make_int_card)
-bot.add_command("make int", "show an adaptive card", usefulC.show_make_int_card)
+bot.add_command("attachmentActions", "*", make_int_card.handle_make_int_card)
+bot.add_command("make int", "show an adaptive card", make_int_card.show_make_int_card)
 bot.add_command("delete int", "Delete an interface. 'delete int int_name'", delete_int)
 
 

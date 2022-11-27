@@ -1,0 +1,40 @@
+{
+    "contentType": "application/vnd.microsoft.card.adaptive",
+    "content": {
+        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+        "type": "AdaptiveCard",
+        "version": "1.2",
+        "body": [
+            {
+                "type": "TextBlock",
+                "text": "Select Router",
+                "size": "Large",
+                "weight": "Bolder"
+            },
+            {
+                "type": "Input.ChoiceSet",
+                "id": "snooze",
+                "value": "Router1",
+                "choices": [
+                    {
+                        "title": "Router1",
+                        "value": "192.168.56.105"
+                    },
+                    {
+                        "title": "Router2",
+                        "value": "192.168.56.106"
+                    }
+                ]
+            }
+        ],
+        "actions": [
+            {
+                "type": "Action.Submit",
+                "title": "Submit",
+                "data": {
+                    "action": "snooze"
+                }
+            }
+        ]
+    }
+}

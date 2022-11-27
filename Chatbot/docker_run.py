@@ -1,5 +1,6 @@
-# Runs MDT Docker - Keith 11/23
+# Runs MDT Docker - Keith --Riley 11/27
 import subprocess
+from time import sleep
 import os
 
 # Need to use subprocess instead of os.system, but its functional - Keith
@@ -9,33 +10,45 @@ image = 'jeremycohoe/tig_mdt'
 def Docker_Check():
     docker_img=(f'{image}:latest')
     docker_inspect=(f'docker image inspect {image} | grep latest')
-    rep1,rep2=0,0
+
     result=str(subprocess.check_output(docker_inspect, shell=True))
     # print(result)
     if docker_img not in result:
-        rep1=(f'Docker img: {docker_img} not Found')
+        not_found = '='*5,f'Docker img: {docker_img} not Found','='*5
         os.system(f'docker pull {image}')
+        return not_found
     else:
-        rep2=(f'Docker Image: \'{docker_img}\' Found')
+        found = '='*5,f'Docker Image: \'{docker_img}\' Found','='*5
     # print(type(result))
-    return rep1,rep2
+        return found
 
 def Docker_Run():
-    command=(f'docker run --name {name} -p 3000:3000 -p 57500:57500 {image} &')
+    # Modifying this so it runs docker in the background
+    # -t A terminal that can be accessed
+    # -d Background so it doesn't take over the Flask Terminal
+    # -Riley 11/24
+    command=(f'docker run -d --name {name} -p 3000:3000 -p 57500:57500 {image} &')
+    response = f"Starting Image {name}"
+    # -t -d 
     os.system(command)
-    return('Success')
+    return response
 
 def Docker_Cleanup():
+    # Going to get the id of the docker container.
+    # docker container ls --quiet --filter "name=CNIT"
     # Stops image with var=name
+    name = os.popen('docker container ls --quiet --filter "name=CNIT"').read()
     command=(f'docker stop {name}')
     # Removes image with var=name
     command2=(f'docker rm {name}')
     
     os.system(command)
-    resp1=('Stopping Container')
-    resp2=('Removing Container')
+    print('='*5,f'Stopping Container {name}','='*5)
+    # Stopping the container takes time. This is a placeholder for pausing
+    sleep(20)
+    print('='*5,'Removing Container','='*5)
     os.system(command2)
 
     #useful command for removing all instances of docker in cli
     #docker rm $( docker ps -aq )
-    return resp1,resp2
+    return name
