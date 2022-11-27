@@ -1,4 +1,4 @@
-# Runs MDT Docker - Keith 11/23
+# Runs MDT Docker - Keith --Riley 11/27
 import subprocess
 from time import sleep
 import os
@@ -27,8 +27,9 @@ def Docker_Run():
     # -t A terminal that can be accessed
     # -d Background so it doesn't take over the Flask Terminal
     # -Riley 11/24
-    command=(f'docker run -t -d --name {name} -p 3000:3000 -p 57500:57500 {image} &')
+    command=(f'docker run -d --name {name} -p 3000:3000 -p 57500:57500 {image} &')
     response = f"Starting Image {name}"
+    # -t -d 
     os.system(command)
     return response
 
@@ -37,11 +38,9 @@ def Docker_Cleanup():
     # docker container ls --quiet --filter "name=CNIT"
     # Stops image with var=name
     name = os.popen('docker container ls --quiet --filter "name=CNIT"').read()
-    containerid = name
     command=(f'docker stop {name}')
     # Removes image with var=name
     command2=(f'docker rm {name}')
-    
     
     os.system(command)
     print('='*5,f'Stopping Container {name}','='*5)
@@ -52,6 +51,4 @@ def Docker_Cleanup():
 
     #useful command for removing all instances of docker in cli
     #docker rm $( docker ps -aq )
-    return containerid
-
-
+    return name

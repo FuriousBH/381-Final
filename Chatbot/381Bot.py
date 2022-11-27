@@ -5,24 +5,28 @@ import pull_skills as useful
 import mod_skills as usefulP
 import card_skills as usefulC
 import docker_run as docker
+import myparamiko as paramiko
 from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
 
-# Router Info 
-device_address = routers.router['host']
-device_username = routers.router['username']
-device_password = routers.router['password']
+device_username = routers.credentials['username']
+device_password = routers.credentials['password']
+# Router 1 Info
+r1_address = routers.routers['r1']['address']
+# Router 2 Info
+r2_address = routers.routers['r2']['address']
 
 # RESTCONF Setup
 port = '443'
-url_base = "https://{h}/restconf".format(h=device_address)
+url_base_1 = "https://{h}/restconf".format(h=r1_address)
+url_base_2 = "https://{h}/restconf".format(h=r2_address)
 headers = {'Content-Type': 'application/yang-data+json',
            'Accept': 'application/yang-data+json'}
 
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://6213-66-188-182-24.ngrok.io"
+bot_url = "https://07e4-66-188-182-24.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -54,7 +58,7 @@ def greeting(incoming_msg):
 # Show the Interfaces on the Router
 def get_int_ips(incoming_msg):
     response = Response()
-    intf_list = useful.get_configured_interfaces(url_base, headers,device_username,device_password)
+    intf_list = useful.get_configured_interfaces(url_base_1, headers,device_username,device_password)
 
     if len(intf_list) == 0:
         response.markdown = "I don't have any information of this device"
@@ -77,7 +81,7 @@ def delete_int(incoming_msg):
     name = incoming_msg.text
     name = name[11:]
     
-    usefulP.delete_int(url_base, name, device_username, device_password)
+    usefulP.delete_int(url_base_1, name, device_username, device_password)
     response.markdown += "Deleted interface " + name 
     return response
 
@@ -114,8 +118,6 @@ bot.set_greeting(greeting)
 # Add Bot's Commands
 bot.add_command(
     "show interfaces", "List all interfaces and their IP addresses", get_int_ips)
-# bot.add_command(
-    # "new int", "Use PUSH to add a new interface", push_new_int)
 bot.add_command("check docker", "Check Docker image", check_docker)
 bot.add_command("run docker", "Runs the docker image jeremycohoe/tig_mdt", run_docker)
 bot.add_command("clean docker", "Stops docker, and removes the container", cleanup_docker)
