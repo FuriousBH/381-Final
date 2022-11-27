@@ -1,0 +1,7 @@
+crypto isakmp policy 1
+no {{ oldCrypto }}
+{{ newCrypto }}
+exit
+crypto map Crypt 10 ipsec-isakmp
+no {{ oldSetPeer }}
+{{ newSetPeer }}

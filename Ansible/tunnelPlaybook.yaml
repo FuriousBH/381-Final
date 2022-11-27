@@ -1,0 +1,12 @@
+---
+- name: Tunnel Info
+  hosts: branch
+  gather_facts: false
+  connection: network_cli
+  vars_files:
+    - ./vars.yaml
+
+  tasks:
+    - name: Updating Tunnel IPs
+      ios_config:
+        src: "finalTemplate.j2"
