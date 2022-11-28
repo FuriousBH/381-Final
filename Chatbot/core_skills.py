@@ -1,6 +1,7 @@
 import os
 import sys
 import routers as R
+import myparamiko as paramiko
 from datetime import date
 
 
@@ -17,6 +18,17 @@ def router_select(router_name):
             data[k] = str(v)
     
     return data
+
+def address_return(router_name):
+    device_dict = router_select(router_name)
+    address = device_dict['address']
+    return address
+
+def my_paramiko_client_shell(address, username, password):
+    """MyParamiko skill. To calm down some nonesense"""
+    ssh_client = paramiko.connect(address, 22, username, password)
+    shell = paramiko.get_shell(ssh_client)
+    return shell
 
 def datetime():
     today = date.today()

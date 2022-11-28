@@ -1,11 +1,8 @@
 import core_skills as Core
 import myparamiko as paramiko
+import make_int_card_skills as makeCard
 
-# Testing to get datetime from function
+# Testing different functions to implement them into the bot
 
-router = 'r2'
-router_dict = Core.router_select(router)
-print(router_dict)
-
-for k, v in router_dict.items():
-    print(f"{k}:{v}")
+address = Core.address_return('r1') 
+print(address)

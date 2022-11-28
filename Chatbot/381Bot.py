@@ -11,8 +11,6 @@ from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
 
 
-device_username = routers.credentials['username']
-device_password = routers.credentials['password']
 # Router 1 Info
 r1_address = routers.routers['r1']['address']
 # Router 2 Info
@@ -20,15 +18,14 @@ r2_address = routers.routers['r2']['address']
 
 # RESTCONF Setup
 port = '443'
-url_base_1 = "https://{h}/restconf".format(h=r1_address)
-url_base_2 = "https://{h}/restconf".format(h=r2_address)
+url_base = "https://{h}/restconf"
 headers = {'Content-Type': 'application/yang-data+json',
            'Accept': 'application/yang-data+json'}
 
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://f595-66-188-182-24.ngrok.io"
+bot_url = "https://4479-66-188-182-24.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -60,7 +57,10 @@ def greeting(incoming_msg):
 # Show the Interfaces on the Router
 def get_int_ips(incoming_msg):
     response = Response()
-    intf_list = useful.get_configured_interfaces(url_base_1, headers,device_username,device_password)
+    device_name = Core.to_text(incoming_msg)
+    device_name = device_name[16:]
+    device_dict = Core.router_select(device_name)
+    intf_list = useful.get_configured_interfaces(url_base.format(h=device_dict['address']), headers, device_dict['username'], device_dict['password'])
 
     if len(intf_list) == 0:
         response.markdown = "I don't have any information of this device"
@@ -90,8 +90,7 @@ def show_run_config(incoming_msg):
     filename = Core.combine_two_strings(router, today)
     
     f = open('Outputs/' + filename +'.txt', 'w')
-    ssh_client = paramiko.connect(address, 22, username, password)
-    shell = paramiko.get_shell(ssh_client)
+    shell = Core.my_paramiko_client_shell(address, username, password)
     response = paramiko.show(shell, "show run")
     f.writelines([response])
     f.close()
@@ -102,12 +101,15 @@ def delete_int(incoming_msg):
     """Delete an interface. Use 
     delete int 'int name'"""
     response = Response()
+    message_input = Core.to_text(incoming_msg)
+    message_input = message_input[11:]
+    name = message_input[:2]
+    interface = message_input[3:]
+    device_dict = Core.router_select(name)
+
     
-    name = incoming_msg.text
-    name = name[11:]
-    
-    usefulP.delete_int(url_base_1, name, device_username, device_password)
-    response.markdown += "Deleted interface " + name 
+    usefulP.delete_int(url_base.format(h=device_dict['address']), interface, device_dict['username'], device_dict['password'])
+    response.markdown += "Deleted interface " + interface + "On device: " + name
     return response
 
 # Commands for interacting with Docker
@@ -127,6 +129,7 @@ def run_docker(incoming_msg):
     response.markdown = f"{run}"
     
     return response
+
 
 def cleanup_docker(incoming_msg):
     """Keith's Docker Stuff, just testing"""
@@ -148,6 +151,7 @@ bot.add_command("run docker", "Runs the docker image jeremycohoe/tig_mdt", run_d
 bot.add_command("clean docker", "Stops docker, and removes the container", cleanup_docker)
 bot.add_command("attachmentActions", "*", usefulC.handle_make_int_card)
 bot.add_command("make int", "show an adaptive card", usefulC.show_make_int_card)
+# bot.add_command("make int", "show an adaptive card", make_int_card)
 bot.add_command("delete int", "Delete an interface. 'delete int int_name'", delete_int)
 bot.add_command("show run", "Shows the running configuration of router", show_run_config)
 
