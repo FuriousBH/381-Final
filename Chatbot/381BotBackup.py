@@ -6,10 +6,9 @@ import mod_skills as usefulP
 import card_skills as usefulC
 import docker_run as docker
 import myparamiko as paramiko
-import core_skills as Core
 from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
-
+from datetime import date
 
 device_username = routers.credentials['username']
 device_password = routers.credentials['password']
@@ -28,7 +27,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://f595-66-188-182-24.ngrok.io"
+bot_url = "https://07e4-66-188-182-24.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -78,23 +77,15 @@ def get_int_ips(incoming_msg):
 # Function for pulling the running configuration
 def show_run_config(incoming_msg):
     """Use paramiko to show the running configuration, and print add it to a directory"""
-    # Todo: Make a method for selecting a specific router
     response = Response()
-    today = Core.datetime()
-    router= Core.to_text(incoming_msg)
-    router = router[9:]
-    router_dict = Core.router_select(router)
-    address = router_dict['address']
-    username = router_dict['username']
-    password = router_dict['password']
-    filename = Core.combine_two_strings(router, today)
+    today = date.today()
+    name = str(r1_address) + str(today)
     
-    f = open('Outputs/' + filename +'.txt', 'w')
-    ssh_client = paramiko.connect(address, 22, username, password)
+    f = open('Outputs/'+name , 'w')
+    ssh_client = paramiko.connect(r1_address, 22, device_username, device_password)
     shell = paramiko.get_shell(ssh_client)
     response = paramiko.show(shell, "show run")
     f.writelines([response])
-    f.close()
     
     return response
     
