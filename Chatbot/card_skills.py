@@ -5,7 +5,10 @@ import time
 import json
 import requests
 import mod_skills as usefulP
+import core_skills as Core
 
+
+url_base = "https://{h}/restconf"
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
 
 def show_make_int_card(incoming_msg):
@@ -30,8 +33,9 @@ def handle_make_int_card(api, incoming_msg):
     m = get_attachment_actions(incoming_msg["data"]["id"])
     meeting = open("./Cards/interfacecard.json").read()
     meeting = json.loads(meeting)
+    address = Core.address_return(m['inputs']['deviceName'])
     # #print(meeting['content']['body'][0]['text'])
-    usefulP.push_int(url='https://192.168.56.106/restconf',name=m['inputs']['name'], 
+    usefulP.push_int(url=url_base.format(h=address),name=m['inputs']['name'], 
                      ip=m['inputs']['ip'],
                      netmask=m['inputs']['netmask'])
     return "New Interface Configured: {},\n {},\n {}".format(m["inputs"]["name"],
