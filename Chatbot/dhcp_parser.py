@@ -6,6 +6,7 @@
 from time import sleep
 
 def find_new_dhcp_ip(expected_ip_net):
+    file='Outputs/r1dhcp_lease.txt'
     #Lines to find
     ip_addr_pre='Temp IP addr: '
     renewal_time='Renewal: '
@@ -20,7 +21,7 @@ def find_new_dhcp_ip(expected_ip_net):
     
     return_data=[]
     # Interface and IP found
-    with open('r1dhcp_lease.txt','r') as f:
+    with open(file,'r') as f:
         # DONT DELETE l_no,
         for l_no, line in enumerate(f):
             # ip_addr_pre contains two things we need,IP and Int
@@ -68,7 +69,7 @@ def find_new_dhcp_ip(expected_ip_net):
             #     print(converted_waiting_time) # Type = INT
                 break
             elif vpn_int_ip not in ip_addr1 and waiting_time!='':
-                return ['unexpected val','not found',0,0]
+                return [interface,ip_addr1,repeat_time,converted_waiting_time]
                 # don't look for next lines
     
     #Returning Data

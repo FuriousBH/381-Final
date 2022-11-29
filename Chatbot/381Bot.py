@@ -7,6 +7,7 @@ import card_skills as usefulC
 import sub_mdt_file
 import myparamiko as paramiko
 import core_skills as Core
+import monitor_init
 from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
 
@@ -132,6 +133,28 @@ def delete_int(incoming_msg):
     usefulP.delete_int(url_base.format(h=device_dict['address']), interface, device_dict['username'], device_dict['password'])
     response.markdown += "Deleted interface " + interface + "On device: " + name
     return response
+#Docker
+def check_docker(incoming_msg):
+    response = Response()
+    response.markdown+=usefulP.check_docker()
+    return response
+def run_docker(incoming_msg):
+    response = Response()
+    response.markdown+=usefulP.run_docker()
+    return response
+def run_docker(incoming_msg):
+    response = Response()
+    response.markdown+=usefulP.cleanup_docker()
+    return response
+#Monitor
+def init_monitor(incoming_msg):
+    response = Response()
+    response.markdown+=usefulP.monitor_init.run()
+    return response
+def del_cron(incoming_msg):
+    response = Response()
+    response.markdown+=usefulP.monitor_init.delete_cron()
+    return response
 
 def push_subs(incoming_msg):
     """Keith's Subscription stuff, just testing"""
@@ -188,6 +211,8 @@ bot.add_command("update vars", "Updating Vars", update_vars)
 bot.add_command("check docker", "Check Docker image", usefulP.check_docker)
 bot.add_command("run docker", "Runs the docker image jeremycohoe/tig_mdt", usefulP.run_docker)
 bot.add_command("clean docker", "Stops docker, and removes the container", usefulP.cleanup_docker)
+bot.add_command("vpn automate","runs monitor initialization with cron jobs and ansible",monitor_init.run)
+bot.add_command("cron delete","Purely for lab purposes, remove corn jobs from vpn automate",monitor_init.delete_cron)
 # bot.add_command("add subs", "Adds subscriptions from subscriptions.yml",push_subs)
 
 # -----------------------------------------------------
