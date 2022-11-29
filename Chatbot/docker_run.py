@@ -47,10 +47,10 @@ def Docker_Cleanup():
     # Going to get the id of the docker container.
     # docker container ls --quiet --filter "name=CNIT"
     # Stops image with var=name
-    name = os.popen('docker container ls --quiet --filter "name=CNIT"').read()
+    # name = os.popen('docker container ls --quiet --filter "name=CNIT"').read()
     command=(f'docker stop {name}')
     # Removes image with var=name
-    command2=(f'docker rm {name}')
+    # command2=(f'docker rm {name}')
     
     os.system(command)
     print(f'Stopping Container {name}')
