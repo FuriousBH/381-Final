@@ -11,6 +11,12 @@ import core_skills as Core
 from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
 
+# -------- Brock's Secret Stuff -----------------------
+import sys
+import ruamel.yaml
+yaml = ruamel.yaml.YAML()
+showRun = open('rShowRun.txt', 'r').read().splitlines()
+# -----------------------------------------------------
 
 # RESTCONF Setup
 port = '443'
@@ -91,27 +97,7 @@ def show_run_config(incoming_msg):
     f.close()
     
     return response
-
-# Function to show DHCP lease
-def show_dhcp_lease(incoming_msg):
-    """Make use of Paramiko to pull the 'show dhcp lease' command output"""
-    response = Response()
-    router = Core.to_text(incoming_msg)
-    router = router[16:]
-    router_dict = Core.router_select(router)
-    address = router_dict['address']
-    username = router_dict['username']
-    password = router_dict['password']
-    filename = Core.combine_two_strings(router, 'dhcp_lease.txt')
     
-    f = open('Outputs/' + filename, 'w')
-    shell = Core.my_paramiko_client_shell(address, username, password)
-    response = paramiko.show(shell, "show dhcp lease")
-    f.writelines([response])
-    f.close()    
-    
-    return response
-
 def delete_int(incoming_msg):
     """Delete an interface. Use 
     delete int 'int name'"""
@@ -162,6 +148,29 @@ def push_subs(incoming_msg):
     response.markdown = f"Shut down {subscriptions}"
     
     return response
+
+# -------- Brock's Secret Stuff -----------------------
+#reads show run file and splits lines
+showRun = open('rShowRun.txt', 'r').read().splitlines()
+
+    #opens the vars.yaml file, changes the old info with the new information
+    with open('vars.yaml', 'r') as read_file:
+           contents = yaml.load(read_file)
+           #print(contents)
+           #Assign the previous IP info to the Old variable
+           contents['oldCrypto'] = contents['newCrypto']
+           contents['oldSetPeer'] = contents['newSetPeer']
+           #Updates the New variable with the new IP info
+           contents['newCrypto'] = showRun[5]
+           contents['newSetPeer'] = showRun[14]
+           #print(contents)
+
+    #dumps new yaml file into output.yaml 
+    with open('vars.yaml', 'w') as dump_file:
+           yaml.dump(contents, dump_file)
+# -----------------------------------------------------
+
+
 # Set the Bot's greeting
 bot.set_greeting(greeting)
 
@@ -177,7 +186,9 @@ bot.add_command("make int", "show an adaptive card", usefulC.show_make_int_card)
 bot.add_command("delete int", "Delete an interface. 'delete int int_name'", delete_int)
 bot.add_command("show run", "Shows the running configuration of router", show_run_config)
 bot.add_command("add subs", "Adds subscriptions from subscriptions.yml",push_subs)
-bot.add_command("show dhcp lease", "Paramiko to show dhcp lease on specified router", show_dhcp_lease)
+# -------- Brock's Secret Stuff -----------------------
+bot.add_command("update vars", "Updating Vars", update_vars)
+# -----------------------------------------------------
 
 if __name__ == "__main__":
     # Run Bot
