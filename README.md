@@ -12,7 +12,10 @@ In this project our team utilized skills we developed throughout the CNIT-381 co
 2.   
 
 ### Ansible
-1.   
+1.  Download the files from the Ansible folder in this repository
+2.  tunnelPlaybook.yaml is the playbook Ansible uses to render the Jinja2 template, finalTemplate.j2, with the vars from vars.yaml
+3.  updateVars.py is the script used to update the vars.yaml file with the current tunnel IP info that's grabbed from the routers
+4.  Combined together, these files gather new tunnel IP info, render a new template, and configure the routers dynamically when it's IP changes
 
 
 
