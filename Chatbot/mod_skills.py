@@ -2,6 +2,9 @@ import myparamiko as m
 ### For RESTCONF
 import requests
 import json
+### for Docker
+import docker_run as docker
+from webexteamsbot.models import Response
 
 
 from requests.auth import HTTPBasicAuth
@@ -54,3 +57,29 @@ def delete_int(url, name, username, password):
                                data=json.dumps(payload),
                                verify=False)
     return ""
+# Commands for interacting with Docker
+def check_docker(incoming_msg):
+    """Makes use of Keith's lib. Nothing to add atm"""
+    response = Response()
+    check = docker.Docker_Check()
+
+    response.markdown = f"{check}"
+    
+    return response
+
+def run_docker(incoming_msg):
+    """Keith's Docker stuff, just testing atm"""
+    response = Response()
+    run = docker.Docker_Run()
+    response.markdown = f"{run}"
+    
+    return response
+
+def cleanup_docker(incoming_msg):
+    """Keith's Docker Stuff, just testing"""
+    response = Response()
+    container_id = docker.Docker_Cleanup()
+    
+    response.markdown = f"Shut down {container_id}"
+    
+    return response

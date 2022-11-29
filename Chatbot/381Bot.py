@@ -4,8 +4,7 @@ import routers
 import pull_skills as useful
 import mod_skills as usefulP
 import card_skills as usefulC
-import docker_run as docker
-import cisco_netconf as sub_mdt_file
+import sub_mdt_file
 import myparamiko as paramiko
 import core_skills as Core
 from webexteamsbot import TeamsBot
@@ -28,7 +27,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://223b-66-188-182-24.ngrok.io"
+bot_url = "https://dcea-66-188-244-232.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -134,33 +133,6 @@ def delete_int(incoming_msg):
     response.markdown += "Deleted interface " + interface + "On device: " + name
     return response
 
-# Commands for interacting with Docker
-def check_docker(incoming_msg):
-    """Makes use of Keith's lib. Nothing to add atm"""
-    response = Response()
-    check = docker.Docker_Check()
-
-    response.markdown = f"{check}"
-    
-    return response
-
-def run_docker(incoming_msg):
-    """Keith's Docker stuff, just testing atm"""
-    response = Response()
-    run = docker.Docker_Run()
-    response.markdown = f"{run}"
-    
-    return response
-
-def cleanup_docker(incoming_msg):
-    """Keith's Docker Stuff, just testing"""
-    response = Response()
-    container_id = docker.Docker_Cleanup()
-    
-    response.markdown = f"Shut down {container_id}"
-    
-    return response
-
 def push_subs(incoming_msg):
     """Keith's Subscription stuff, just testing"""
     response = Response()
@@ -199,21 +171,27 @@ def update_vars(incoming_msg):
 bot.set_greeting(greeting)
 
 # Add Bot's Commands
+# -------- Riley's Clean Stuff -----------------------
 bot.add_command(
     "show interfaces", "List all interfaces and their IP addresses", get_int_ips)
-bot.add_command("check docker", "Check Docker image", check_docker)
-bot.add_command("run docker", "Runs the docker image jeremycohoe/tig_mdt", run_docker)
-bot.add_command("clean docker", "Stops docker, and removes the container", cleanup_docker)
 bot.add_command("attachmentActions", "*", usefulC.handle_make_int_card)
 bot.add_command("make int", "show an adaptive card", usefulC.show_make_int_card)
 # bot.add_command("make int", "show an adaptive card", make_int_card)
 bot.add_command("delete int", "Delete an interface. 'delete int int_name'", delete_int)
 bot.add_command("show run", "Shows the running configuration of router", show_run_config)
-bot.add_command("add subs", "Adds subscriptions from subscriptions.yml",push_subs)
+bot.add_command("show dhcp lease", "Paramiko to show dhcp lease on specified router", show_dhcp_lease)
+# -----------------------------------------------------
 # -------- Brock's Secret Stuff -----------------------
 bot.add_command("update vars", "Updating Vars", update_vars)
 # -----------------------------------------------------
-bot.add_command("show dhcp lease", "Paramiko to show dhcp lease on specified router", show_dhcp_lease)
+# -------- Keith's Public Stuff -----------------------
+bot.add_command("check docker", "Check Docker image", usefulP.check_docker)
+bot.add_command("run docker", "Runs the docker image jeremycohoe/tig_mdt", usefulP.run_docker)
+bot.add_command("clean docker", "Stops docker, and removes the container", usefulP.cleanup_docker)
+# bot.add_command("add subs", "Adds subscriptions from subscriptions.yml",push_subs)
+
+# -----------------------------------------------------
+
 if __name__ == "__main__":
     # Run Bot
     bot.run(host="0.0.0.0", port=5000)
