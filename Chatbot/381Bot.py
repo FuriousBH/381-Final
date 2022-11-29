@@ -141,10 +141,7 @@ def run_docker(incoming_msg):
     response = Response()
     response.markdown+=usefulP.run_docker()
     return response
-def run_docker(incoming_msg):
-    response = Response()
-    response.markdown+=usefulP.cleanup_docker()
-    return response
+
 #Monitor
 def init_monitor(incoming_msg):
     response = Response()
