@@ -78,6 +78,7 @@ def get_int_ips(incoming_msg):
     return response
 
 # Function for pulling the running configuration
+# This function is spefically for Ansible
 def show_run_config(incoming_msg):
     """Use paramiko to show the running configuration, and print add it to a directory"""
     # Todo: Make a method for selecting a specific router
