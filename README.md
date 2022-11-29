@@ -1,14 +1,16 @@
 # 381-Final
----
 This is a repository for the CNIT-381 Final Group Project.
 
 # Project Overview
----
-
 In this project our team utilized skills we developed throughout the CNIT-381 course to make a chatbot that uses several skills including Ansible, Restconf/Netconf, and Paramiko/Netmiko.
 
 # Project Instructions
----
+### Local Setup
+1.   Install ruamel.yaml or pyyaml by issuing this command in the terminal: pip3 install ruamel.yaml OR pip3 install pyyaml
+2.   
+
+### Ansible
+1.   
 
 
 
