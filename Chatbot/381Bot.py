@@ -11,11 +11,12 @@ import core_skills as Core
 from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
 
-
-# Router 1 Info
-r1_address = routers.routers['r1']['address']
-# Router 2 Info
-r2_address = routers.routers['r2']['address']
+# -------- Brock's Secret Stuff -----------------------
+import sys
+import ruamel.yaml
+# yaml = ruamel.yaml.YAML()
+# showRun = open('rShowRun.txt', 'r').read().splitlines()
+# -----------------------------------------------------
 
 # RESTCONF Setup
 port = '443'
@@ -26,7 +27,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://350f-66-188-244-232.ngrok.io"
+bot_url = "https://bd13-66-188-244-232.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -88,9 +89,8 @@ def show_run_config(incoming_msg):
     address = router_dict['address']
     username = router_dict['username']
     password = router_dict['password']
-    filename = Core.combine_two_strings(router, today)
     
-    f = open('Outputs/' + filename +'.txt', 'w')
+    f = open('/home/devasc/381-Final/Ansible/showRun.txt', 'w')
     shell = Core.my_paramiko_client_shell(address, username, password)
     response = paramiko.show(shell, "show run")
     f.writelines([response])
@@ -148,6 +148,32 @@ def push_subs(incoming_msg):
     response.markdown = f"Shut down {subscriptions}"
     
     return response
+
+# -------- Brock's Secret Stuff -----------------------
+def update_vars(incoming_msg):
+    response = Response()
+    #reads show run file and splits lines
+    showRun = open('rShowRun.txt', 'r').read().splitlines()
+
+    #opens the vars.yaml file, changes the old info with the new information
+    with open('vars.yaml', 'r') as read_file:
+           contents = yaml.load(read_file)
+           #print(contents)
+           #Assign the previous IP info to the Old variable
+           contents['oldCrypto'] = contents['newCrypto']
+           contents['oldSetPeer'] = contents['newSetPeer']
+           #Updates the New variable with the new IP info
+           contents['newCrypto'] = showRun[5]
+           contents['newSetPeer'] = showRun[14]
+           #print(contents)
+
+    #dumps new yaml file into output.yaml 
+    with open('vars.yaml', 'w') as dump_file:
+           yaml.dump(contents, dump_file)
+    return response
+# -----------------------------------------------------
+
+
 # Set the Bot's greeting
 bot.set_greeting(greeting)
 
@@ -163,6 +189,10 @@ bot.add_command("make int", "show an adaptive card", usefulC.show_make_int_card)
 bot.add_command("delete int", "Delete an interface. 'delete int int_name'", delete_int)
 bot.add_command("show run", "Shows the running configuration of router", show_run_config)
 bot.add_command("add subs", "Adds subscriptions from subscriptions.yml",push_subs)
+# -------- Brock's Secret Stuff -----------------------
+bot.add_command("update vars", "Updating Vars", update_vars)
+# -----------------------------------------------------
+
 if __name__ == "__main__":
     # Run Bot
     bot.run(host="0.0.0.0", port=5000)
