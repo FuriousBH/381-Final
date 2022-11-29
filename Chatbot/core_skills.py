@@ -9,7 +9,6 @@ def router_select(router_name):
     routers = R.routers
     data = {}
     r_list = []
-    name = ''
     r_list = routers.keys()
     if router_name not in r_list:
         return f"Router {router_name} is not present."
