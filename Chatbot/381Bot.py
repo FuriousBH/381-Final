@@ -97,7 +97,26 @@ def show_run_config(incoming_msg):
     f.close()
     
     return response
-    
+
+def show_dhcp_lease(incoming_msg):
+    """Make use of Paramiko to pull the 'show dhcp lease' command output"""
+    response = Response()
+    router = Core.to_text(incoming_msg)
+    router = router[16:]
+    router_dict = Core.router_select(router)
+    address = router_dict['address']
+    username = router_dict['username']
+    password = router_dict['password']
+    filename = Core.combine_two_strings(router, 'dhcp_lease.txt')
+
+    f = open('Outputs/' + filename, 'w')
+    shell = Core.my_paramiko_client_shell(address, username, password)
+    response = paramiko.show(shell, "show dhcp lease")
+    f.writelines([response])
+    f.close()    
+
+    return response
+
 def delete_int(incoming_msg):
     """Delete an interface. Use 
     delete int 'int name'"""
