@@ -1,7 +1,7 @@
 # 381-Final
 This is a repository for the CNIT-381 Final Group Project.
 
-# Project Overview
+## Project Overview
 In this project our team utilized skills we developed throughout the CNIT-381 course to make a chatbot that uses several skills including Ansible, Restconf/Netconf, and Paramiko/Netmiko.
 
 # Project Instructions
