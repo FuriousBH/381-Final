@@ -92,7 +92,7 @@ def show_run_config(incoming_msg):
     
     f = open('/home/devasc/381-Final/Ansible/showRun.txt', 'w')
     shell = Core.my_paramiko_client_shell(address, username, password)
-    response = paramiko.show(shell, "show run")
+    response = paramiko.show(shell, "show run | section include crypto isakmp")
     f.writelines([response])
     f.close()
     
