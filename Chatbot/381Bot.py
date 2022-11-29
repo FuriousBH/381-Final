@@ -150,8 +150,10 @@ def push_subs(incoming_msg):
     return response
 
 # -------- Brock's Secret Stuff -----------------------
-#reads show run file and splits lines
-showRun = open('rShowRun.txt', 'r').read().splitlines()
+def update_vars(incoming_msg):
+    response = Response()
+    #reads show run file and splits lines
+    showRun = open('rShowRun.txt', 'r').read().splitlines()
 
     #opens the vars.yaml file, changes the old info with the new information
     with open('vars.yaml', 'r') as read_file:
@@ -168,6 +170,7 @@ showRun = open('rShowRun.txt', 'r').read().splitlines()
     #dumps new yaml file into output.yaml 
     with open('vars.yaml', 'w') as dump_file:
            yaml.dump(contents, dump_file)
+    return response
 # -----------------------------------------------------
 
 
