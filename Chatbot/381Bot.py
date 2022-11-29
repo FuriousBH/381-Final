@@ -15,6 +15,7 @@ from webexteamsbot.models import Response
 import sys
 import ruamel.yaml
 yaml = ruamel.yaml.YAML()
+
 showRun = open('rShowRun.txt', 'r').read().splitlines()
 # -----------------------------------------------------
 
@@ -27,7 +28,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://4821-66-188-182-24.ngrok.io"
+bot_url = "https://223b-66-188-182-24.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object

@@ -5,16 +5,12 @@ import pull_skills as useful
 import mod_skills as usefulP
 import card_skills as usefulC
 import docker_run as docker
+import cisco_netconf as sub_mdt_file
 import myparamiko as paramiko
 import core_skills as Core
 from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
 
-
-# Router 1 Info
-r1_address = routers.routers['r1']['address']
-# Router 2 Info
-r2_address = routers.routers['r2']['address']
 
 # RESTCONF Setup
 port = '443'
@@ -78,6 +74,7 @@ def get_int_ips(incoming_msg):
 # Function for pulling the running configuration
 def show_run_config(incoming_msg):
     """Use paramiko to show the running configuration, and print add it to a directory"""
+    # Todo: Make a method for selecting a specific router
     response = Response()
     today = Core.datetime()
     router= Core.to_text(incoming_msg)
@@ -86,9 +83,8 @@ def show_run_config(incoming_msg):
     address = router_dict['address']
     username = router_dict['username']
     password = router_dict['password']
-    filename = Core.combine_two_strings(router, today)
     
-    f = open('Outputs/' + filename +'.txt', 'w')
+    f = open('/home/devasc/381-Final/Ansible/showRun.txt', 'w')
     shell = Core.my_paramiko_client_shell(address, username, password)
     response = paramiko.show(shell, "show run")
     f.writelines([response])
@@ -125,6 +121,7 @@ def delete_int(incoming_msg):
     name = message_input[:2]
     interface = message_input[3:]
     device_dict = Core.router_select(name)
+
     
     usefulP.delete_int(url_base.format(h=device_dict['address']), interface, device_dict['username'], device_dict['password'])
     response.markdown += "Deleted interface " + interface + "On device: " + name
@@ -148,7 +145,6 @@ def run_docker(incoming_msg):
     
     return response
 
-
 def cleanup_docker(incoming_msg):
     """Keith's Docker Stuff, just testing"""
     response = Response()
@@ -158,6 +154,14 @@ def cleanup_docker(incoming_msg):
     
     return response
 
+def push_subs(incoming_msg):
+    """Keith's Subscription stuff, just testing"""
+    response = Response()
+    subscriptions = sub_mdt_file.setup()
+    
+    response.markdown = f"Shut down {subscriptions}"
+    
+    return response
 # Set the Bot's greeting
 bot.set_greeting(greeting)
 
@@ -172,6 +176,7 @@ bot.add_command("make int", "show an adaptive card", usefulC.show_make_int_card)
 # bot.add_command("make int", "show an adaptive card", make_int_card)
 bot.add_command("delete int", "Delete an interface. 'delete int int_name'", delete_int)
 bot.add_command("show run", "Shows the running configuration of router", show_run_config)
+bot.add_command("add subs", "Adds subscriptions from subscriptions.yml",push_subs)
 bot.add_command("show dhcp lease", "Paramiko to show dhcp lease on specified router", show_dhcp_lease)
 
 if __name__ == "__main__":
