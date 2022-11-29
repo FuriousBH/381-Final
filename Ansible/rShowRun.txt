@@ -1,0 +1,24 @@
+
+*                                           *
+**                                         **
+***                                       ***
+***  Cisco Networking Academy             ***
+***                                       ***
+***  This software is provided for        ***
+***   Educational Purposes                ***
+***    Only in Networking Academies       ***
+***                                       ***
+**                                         **
+*                                           *
+
+
+
+CSR1#terminal length 0
+CSR1#show run | section include crypto isakmp
+crypto isakmp policy 1
+ encryption 3des
+ hash md5
+ authentication pre-share
+ group 2
+crypto isakmp key cisco address 172.16.0.2     
+CSR1#

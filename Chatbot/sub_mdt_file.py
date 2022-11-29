@@ -3,7 +3,7 @@ from yaml import safe_load
 from jinja2 import Environment, FileSystemLoader
 from ncclient import manager
 import routers
-
+#Still not working
 # Add subscriptions.yml to router configs found in routers.py
 # def main():
 r1=routers.routers['r1']['address']

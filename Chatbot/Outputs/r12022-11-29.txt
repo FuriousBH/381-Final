@@ -13,13 +13,13 @@
 
 
 
-CSR2#terminal length 0
-CSR2#show run
+CSR1#terminal length 0
+CSR1#show run
 Building configuration...
 
 Current configuration : 7330 bytes
 !
-! Last configuration change at 22:20:18 UTC Sun Nov 27 2022 by NETCONF
+! Last configuration change at 00:36:13 UTC Tue Nov 29 2022 by NETCONF
 !
 version 16.12
 service timestamps debug datetime msec
@@ -29,7 +29,7 @@ platform qfp utilization monitor load 80
 platform punt-keepalive disable-kernel-core
 platform console virtual
 !
-hostname CSR2
+hostname CSR1
 !
 boot-start-marker
 boot-end-marker
@@ -157,7 +157,7 @@ crypto pki certificate chain SLA-TrustPoint
   D697DF7F 28
   	quit
 !
-license udi pid CSR1000V sn 9YSKW5LNPLR
+license udi pid CSR1000V sn 9WBIX95BJPS
 diagnostic bootup level minimal
 memory free low-watermark processor 72329
 !
@@ -185,7 +185,7 @@ crypto isakmp policy 1
  hash md5
  authentication pre-share
  group 2
-crypto isakmp key cisco address 172.16.0.1     
+crypto isakmp key cisco address 172.16.0.2     
 !
 !
 crypto ipsec transform-set tran1 esp-3des esp-md5-hmac 
@@ -194,7 +194,7 @@ crypto ipsec transform-set tran1 esp-3des esp-md5-hmac
 !
 !
 crypto map Crypt 10 ipsec-isakmp 
- set peer 172.16.0.1
+ set peer 172.16.0.2
  set transform-set tran1 
  match address VPN-ACL
 !
@@ -206,7 +206,7 @@ crypto map Crypt 10 ipsec-isakmp
 !
 !
 interface Loopback0
- ip address 2.2.2.2 255.255.255.0
+ ip address 1.1.1.1 255.255.255.0
  ip nat inside
 !
 interface Loopback2
@@ -221,7 +221,7 @@ interface GigabitEthernet1
  no mop sysid
 !
 interface GigabitEthernet2
- ip address 172.16.0.2 255.255.255.0
+ ip address 172.16.0.1 255.255.255.0
  ip nat outside
  negotiation auto
  no mop enabled
@@ -234,14 +234,14 @@ ip http authentication local
 ip http secure-server
 !
 ip nat inside source list 100 interface GigabitEthernet2 overload
-ip route 1.1.1.0 255.255.255.0 GigabitEthernet2
+ip route 2.2.2.0 255.255.255.0 GigabitEthernet2
 !
 ip access-list extended VPN-ACL
- 10 permit ip 2.2.2.0 0.0.0.255 1.1.1.0 0.0.0.255
+ 10 permit ip 1.1.1.0 0.0.0.255 2.2.2.0 0.0.0.255
 !
 ip access-list extended 100
- 10 deny   ip 2.2.2.0 0.0.0.255 1.1.1.0 0.0.0.255
- 20 permit ip 2.2.2.0 0.0.0.255 any
+ 10 deny   ip 1.1.1.0 0.0.0.255 2.2.2.0 0.0.0.255
+ 20 permit ip 1.1.1.0 0.0.0.255 any
 !
 !
 !
@@ -286,4 +286,4 @@ netconf-yang
 restconf
 end
 
-CSR2#
+CSR1#
