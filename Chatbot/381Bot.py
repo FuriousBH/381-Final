@@ -91,7 +91,7 @@ def show_run_config(incoming_msg):
     username = router_dict['username']
     password = router_dict['password']
     
-    f = open('/home/devasc/381-Final/Ansible/showRun.txt', 'w')
+    f = open('/home/devasc/381-Final/Ansible/rShowRun.txt', 'w')
     shell = Core.my_paramiko_client_shell(address, username, password)
     response = paramiko.show(shell, "show run | section include crypto isakmp")
     f.writelines([response])
