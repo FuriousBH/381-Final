@@ -212,7 +212,7 @@ bot.add_command("add subs", "Adds subscriptions from subscriptions.yml",push_sub
 # -------- Brock's Secret Stuff -----------------------
 bot.add_command("update vars", "Updating Vars", update_vars)
 # -----------------------------------------------------
-
+bot.add_command("show dhcp lease", "Paramiko to show dhcp lease on specified router", show_dhcp_lease)
 if __name__ == "__main__":
     # Run Bot
     bot.run(host="0.0.0.0", port=5000)
