@@ -128,7 +128,6 @@ def delete_int(incoming_msg):
     name = message_input[:2]
     interface = message_input[3:]
     device_dict = Core.router_select(name)
-
     
     usefulP.delete_int(url_base.format(h=device_dict['address']), interface, device_dict['username'], device_dict['password'])
     response.markdown += "Deleted interface " + interface + "On device: " + name
