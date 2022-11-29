@@ -145,7 +145,6 @@ def run_docker(incoming_msg):
     
     return response
 
-
 def cleanup_docker(incoming_msg):
     """Keith's Docker Stuff, just testing"""
     response = Response()
@@ -154,6 +153,7 @@ def cleanup_docker(incoming_msg):
     response.markdown = f"Shut down {container_id}"
     
     return response
+
 def push_subs(incoming_msg):
     """Keith's Subscription stuff, just testing"""
     response = Response()
