@@ -1,10 +1,7 @@
-import os
-import sys
 import myparamiko as m
 ### For RESTCONF
 import requests
-import json
-import urllib3
+
 
 # Function for looking at configured Interfaces
 def get_configured_interfaces(url_base,headers,username,password):

@@ -12,11 +12,6 @@ from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
 
 
-# Router 1 Info
-r1_address = routers.routers['r1']['address']
-# Router 2 Info
-r2_address = routers.routers['r2']['address']
-
 # RESTCONF Setup
 port = '443'
 url_base = "https://{h}/restconf"

@@ -1,5 +1,3 @@
-import os
-import sys
 import routers as R
 import myparamiko as paramiko
 from datetime import date
