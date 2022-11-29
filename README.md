@@ -6,7 +6,7 @@ In this project our team utilized skills we developed throughout the CNIT-381 co
 
 ## Project Instructions
 ### Local Setup
-1.   Install ruamel.yaml or pyyaml by issuing this command in the terminal: pip3 install ruamel.yaml OR pip3 install pyyaml
+1.   Install ruamel.yaml or pyyaml by issuing this command in the terminal: pip3 install ruamel.yaml OR pip3 install pyyaml, this is important for being able to update yaml files.
 ![installPyYAML](https://user-images.githubusercontent.com/99046455/204409091-39012aad-ea3a-404a-8c72-c99aaac3d527.png)
 
 2.   
