@@ -35,10 +35,10 @@ def Docker_Run():
     # You were checking docker container ls, but we were looking for existing docker storage.
     # docker ps -a is the way to go for that
     if name in (os.popen('docker ps -a --filter "name=CNIT"').read()):
-        response +=('Creating first time image')
         command=(f'docker start {name}')
     else:
-        command=(f'docker run -d --name {name} -p 3000:3000 -p 57500:57500 {image}')
+        response +=('Creating first time image')
+        command=(f'docker run -dit --name {name} -p 3000:3000 -p 57500:57500 {image}')
         
     response = f"Starting Image {name}"
     # -d 
@@ -57,7 +57,7 @@ def Docker_Cleanup():
     os.system(command)
     print(f'Stopping Container {name}')
     # Stopping the container takes time. This is a placeholder for pausing
-    sleep(20)
+    sleep(15)
     # print('='*5,'Removing Container','='*5)
     # os.system(command2)
 
