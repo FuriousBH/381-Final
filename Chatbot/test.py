@@ -4,5 +4,8 @@ import myparamiko as paramiko
 
 # Testing different functions to implement them into the bot
 
-address = Core.address_return('r1') 
+username, password, address = Core.router_needs('r1')
+
+print(username)
+print(password)
 print(address)

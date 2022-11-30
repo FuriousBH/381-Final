@@ -28,7 +28,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://c71f-66-188-182-24.ngrok.io"
+bot_url = "https://253c-66-188-182-24.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -84,13 +84,9 @@ def show_run_config(incoming_msg):
     """Use paramiko to show the running configuration, and print add it to a directory"""
     # Todo: Make a method for selecting a specific router
     response = Response()
-    today = Core.datetime()
     router= Core.to_text(incoming_msg)
     router = router[9:]
-    router_dict = Core.router_select(router)
-    address = router_dict['address']
-    username = router_dict['username']
-    password = router_dict['password']
+    username, password, address = Core.router_needs(router)
     
     f = open('/home/devasc/381-Final/Ansible/rShowRun.txt', 'w')
     shell = Core.my_paramiko_client_shell(address, username, password)
@@ -105,10 +101,7 @@ def show_dhcp_lease(incoming_msg):
     response = Response()
     router = Core.to_text(incoming_msg)
     router = router[16:]
-    router_dict = Core.router_select(router)
-    address = router_dict['address']
-    username = router_dict['username']
-    password = router_dict['password']
+    username, password, address = Core.router_needs(router)
     filename = Core.combine_two_strings(router, 'dhcp_lease.txt')
 
     f = open('Outputs/' + filename, 'w')

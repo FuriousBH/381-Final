@@ -16,10 +16,22 @@ def router_select(router_name):
     
     return data
 
+def credentials_return(router_name):
+    """Returns the credentials for the device"""
+    device_dict = router_select(router_name)
+    username = device_dict['username']
+    password = device_dict['password']
+    return username, password
+
 def address_return(router_name):
     device_dict = router_select(router_name)
     address = device_dict['address']
     return address
+
+def router_needs(router_name):
+    username, password = credentials_return(router_name)
+    address = address_return(router_name)
+    return username, password, address
 
 def my_paramiko_client_shell(address, username, password):
     """MyParamiko skill. To calm down some nonesense"""
