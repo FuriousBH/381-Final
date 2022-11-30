@@ -28,7 +28,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://dcea-66-188-244-232.ngrok.io"
+bot_url = "https://c71f-66-188-182-24.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -191,14 +191,14 @@ bot.set_greeting(greeting)
 
 # Add Bot's Commands
 # -------- Riley's Clean Stuff -----------------------
-bot.add_command(
-    "show interfaces", "List all interfaces and their IP addresses", get_int_ips)
+bot.add_command("show interfaces", "List all interfaces and their IP addresses", get_int_ips)
 bot.add_command("attachmentActions", "*", usefulC.handle_make_int_card)
 bot.add_command("make int", "show an adaptive card", usefulC.show_make_int_card)
-# bot.add_command("make int", "show an adaptive card", make_int_card)
+# bot.add_command("make int", "show an adaptive card", make_int_card--Riley--)
 bot.add_command("delete int", "Delete an interface. 'delete int int_name'", delete_int)
 bot.add_command("show run", "Shows the running configuration of router", show_run_config)
 bot.add_command("show dhcp lease", "Paramiko to show dhcp lease on specified router", show_dhcp_lease)
+bot.add_command("delete docker", "Deletes the container from docker", usefulP.delete_docker)
 # -----------------------------------------------------
 # -------- Brock's Secret Stuff -----------------------
 bot.add_command("update vars", "Updating Vars", update_vars)

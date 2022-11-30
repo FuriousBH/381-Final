@@ -30,11 +30,12 @@ def Docker_Run():
     # -t A terminal that can be accessed
     # -d Background so it doesn't take over the Flask Terminal
     # -Riley 11/24
-    
+    response = ''
     #Image Not Found Test
-    if name in (os.popen('docker container ls --quiet --filter "name=CNIT"').read()):
+    # You're checking in the wrong place for an existing docker container here. --quiet returns container id only... As I said
+    if name in (os.popen('docker ps -a --filter "name=CNIT"').read()):
         response +=('Creating first time image')
-        command=(f'docker start -d --name {name} -p 3000:3000 -p 57500:57500 {image}')
+        command=(f'docker start {name}')
     else:
         command=(f'docker run -d --name {name} -p 3000:3000 -p 57500:57500 {image}')
         
@@ -62,3 +63,15 @@ def Docker_Cleanup():
     #useful command for removing all instances of docker in cli
     #docker rm $( docker ps -aq )
     return name
+
+def Docker_Delete():
+    """We all gotta go away at some point.."""
+    response = ''
+    
+    if name in (os.popen('docker ps -a --filter "name=CNIT"').read()):
+        response = (f"Deleting container {name}")
+        command = (f'docker rm {name}')
+    else:
+        response = (f"Container {name} not found")
+    os.system(command)
+    return response
