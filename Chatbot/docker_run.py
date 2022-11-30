@@ -32,7 +32,8 @@ def Docker_Run():
     # -Riley 11/24
     response = ''
     #Image Not Found Test
-    # You're checking in the wrong place for an existing docker container here. --quiet returns container id only... As I said
+    # You were checking docker container ls, but we were looking for existing docker storage.
+    # docker ps -a is the way to go for that
     if name in (os.popen('docker ps -a --filter "name=CNIT"').read()):
         response +=('Creating first time image')
         command=(f'docker start {name}')
