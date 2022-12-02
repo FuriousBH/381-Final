@@ -16,6 +16,19 @@ def router_select(router_name):
     
     return data
 
+def command_parser(incoming_message):
+    """This is a parser that takes the incoming message
+    and looks for a string that is associated with a router.
+    While this could be refractored more, it will serve for now.
+    Give us some extra room for odd commands."""
+    r_list = R.routers.keys()
+    device = ''
+    
+    for key in r_list:
+        if key in incoming_message:
+            device = key
+    return device
+
 def credentials_return(router_name):
     """Returns the credentials for the device"""
     device_dict = router_select(router_name)

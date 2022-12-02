@@ -13,12 +13,12 @@
 
 
 
-CSR2#terminal length 0
-CSR2#show run | section include crypto isakmp
+CSR1#terminal length 0
+CSR1#show run | section include crypto isakmp
 crypto isakmp policy 1
  encryption 3des
  hash md5
  authentication pre-share
  group 2
-crypto isakmp key cisco address 172.16.0.1     
-CSR2#
+crypto isakmp key cisco address 172.16.0.2     
+CSR1#

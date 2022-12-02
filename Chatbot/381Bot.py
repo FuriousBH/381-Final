@@ -28,7 +28,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://253c-66-188-182-24.ngrok.io"
+bot_url = "https://f94e-66-188-182-24.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -61,7 +61,8 @@ def greeting(incoming_msg):
 def get_int_ips(incoming_msg):
     response = Response()
     device_name = Core.to_text(incoming_msg)
-    device_name = device_name[16:]
+    # device_name = device_name[16:]
+    device_name = Core.command_parser(device_name)
     device_dict = Core.router_select(device_name)
     intf_list = useful.get_configured_interfaces(url_base.format(h=device_dict['address']), headers, device_dict['username'], device_dict['password'])
 
@@ -85,7 +86,7 @@ def show_run_config(incoming_msg):
     # Todo: Make a method for selecting a specific router
     response = Response()
     router= Core.to_text(incoming_msg)
-    router = router[9:]
+    router = Core.command_parser(router)
     username, password, address = Core.router_needs(router)
     
     f = open('/home/devasc/381-Final/Ansible/rShowRun.txt', 'w')
@@ -100,7 +101,7 @@ def show_dhcp_lease(incoming_msg):
     """Make use of Paramiko to pull the 'show dhcp lease' command output"""
     response = Response()
     router = Core.to_text(incoming_msg)
-    router = router[16:]
+    router = Core.command_parser(router)
     username, password, address = Core.router_needs(router)
     filename = Core.combine_two_strings(router, 'dhcp_lease.txt')
 

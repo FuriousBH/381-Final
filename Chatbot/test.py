@@ -1,11 +1,18 @@
 import core_skills as Core
 import myparamiko as paramiko
-# import make_int_card_skills as makeCard
+import routers as R
 
-# Testing different functions to implement them into the bot
+# Example Input from Chatbot
+incoming = 'show int r2'
 
-username, password, address = Core.router_needs('r1')
 
-print(username)
-print(password)
-print(address)
+# The beginnings of an example function
+r_list = R.routers.keys()
+
+for key in r_list:
+    if key in incoming:
+        device = key
+        print(f"Found the key: {device}")
+    else:
+        device = "Device not found"
+        print(device)
