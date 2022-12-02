@@ -116,6 +116,7 @@ def show_dhcp_lease(incoming_msg):
 def delete_int(incoming_msg):
     """Delete an interface. Use 
     delete int 'int name'"""
+    # Delete int will require a different parser.
     response = Response()
     message_input = Core.to_text(incoming_msg)
     message_input = message_input[11:]
