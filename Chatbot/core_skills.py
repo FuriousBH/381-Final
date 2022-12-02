@@ -23,7 +23,6 @@ def command_parser(incoming_message):
     Give us some extra room for odd commands."""
     r_list = R.routers.keys()
     device = ''
-    
     for key in r_list:
         if key in incoming_message:
             device = key

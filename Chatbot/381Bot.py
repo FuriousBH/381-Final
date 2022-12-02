@@ -127,6 +127,7 @@ def delete_int(incoming_msg):
     usefulP.delete_int(url_base.format(h=device_dict['address']), interface, device_dict['username'], device_dict['password'])
     response.markdown += "Deleted interface " + interface + "On device: " + name
     return response
+
 #Docker
 def check_docker(incoming_msg):
     response = Response()
@@ -186,13 +187,13 @@ bot.set_greeting(greeting)
 
 # Add Bot's Commands
 # -------- Riley's Clean Stuff -----------------------
-bot.add_command("show interfaces", "List all interfaces and their IP addresses", get_int_ips)
+bot.add_command("show interfaces", "SYNTAX: show interfaces 'device'", get_int_ips)
 bot.add_command("attachmentActions", "*", usefulC.handle_make_int_card)
 bot.add_command("make int", "show an adaptive card", usefulC.show_make_int_card)
 # bot.add_command("make int", "show an adaptive card", make_int_card--Riley--)
-bot.add_command("delete int", "Delete an interface. 'delete int int_name'", delete_int)
-bot.add_command("show run", "Shows the running configuration of router", show_run_config)
-bot.add_command("show dhcp lease", "Paramiko to show dhcp lease on specified router", show_dhcp_lease)
+bot.add_command("delete int", "SYNTAX: delete int 'device' 'int_name'", delete_int)
+bot.add_command("show run", "SYNTAX: show run 'device'", show_run_config)
+bot.add_command("show dhcp lease", "SYNTAX: 'show dhcp lease 'device'", show_dhcp_lease)
 bot.add_command("delete docker", "Deletes the container from docker", usefulP.delete_docker)
 # -----------------------------------------------------
 # -------- Brock's Secret Stuff -----------------------
