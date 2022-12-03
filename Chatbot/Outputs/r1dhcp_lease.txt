@@ -1,4 +1,4 @@
-C
+
 *                                           *
 **                                         **
 ***                                       ***
@@ -15,6 +15,7 @@ C
 
 CSR1#terminal length 0
 CSR1#show dhcp lease
+<<<<<<< HEAD
 Temp IP addr: 172.16.0.2  for peer on Interface: GigabitEthernet2
 Temp  sub net mask: 255.255.255.0
    DHCP Lease server: 172.16.0.15, state: 5 Bound
@@ -24,5 +25,16 @@ Temp  sub net mask: 255.255.255.0
    Retry count: 0   Client-ID: cisco-000c.29ec.3d90-Gi2
    Client-ID hex dump: 636973636F2D303030632E323965632E
                        336439302D476932
+=======
+Temp IP addr: 192.168.56.105  for peer on Interface: GigabitEthernet1
+Temp  sub net mask: 255.255.255.0
+   DHCP Lease server: 192.168.56.100, state: 5 Bound
+   DHCP transaction id: 1D5A
+   Lease: 600 secs,  Renewal: 300 secs,  Rebind: 525 secs
+   Next timer fires after: 00:00:21
+   Retry count: 0   Client-ID: cisco-0800.27a4.9b44-Gi1
+   Client-ID hex dump: 636973636F2D303830302E323761342E
+                       396234342D476931
+>>>>>>> origin/main
    Hostname: CSR1
 CSR1#

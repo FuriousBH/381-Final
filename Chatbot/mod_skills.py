@@ -83,3 +83,12 @@ def cleanup_docker(incoming_msg):
     response.markdown = f"Shut down {container_id}"
     
     return response
+
+def delete_docker(incoming_msg):
+    """Deleting the Docker Container --Riley 11/29/2022"""
+    response = Response()
+    result = docker.Docker_Delete()
+    
+    response.markdown = result
+    
+    return response

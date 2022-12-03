@@ -28,7 +28,11 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
+<<<<<<< HEAD
 bot_url = "https://76b7-66-188-244-232.ngrok.io"
+=======
+bot_url = "https://f94e-66-188-182-24.ngrok.io"
+>>>>>>> origin/main
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -61,7 +65,8 @@ def greeting(incoming_msg):
 def get_int_ips(incoming_msg):
     response = Response()
     device_name = Core.to_text(incoming_msg)
-    device_name = device_name[16:]
+    # device_name = device_name[16:]
+    device_name = Core.command_parser(device_name)
     device_dict = Core.router_select(device_name)
     intf_list = useful.get_configured_interfaces(url_base.format(h=device_dict['address']), headers, device_dict['username'], device_dict['password'])
 
@@ -84,13 +89,9 @@ def show_run_config(incoming_msg):
     """Use paramiko to show the running configuration, and print add it to a directory"""
     # Todo: Make a method for selecting a specific router
     response = Response()
-    today = Core.datetime()
     router= Core.to_text(incoming_msg)
-    router = router[9:]
-    router_dict = Core.router_select(router)
-    address = router_dict['address']
-    username = router_dict['username']
-    password = router_dict['password']
+    router = Core.command_parser(router)
+    username, password, address = Core.router_needs(router)
     
     f = open('/home/devasc/381-Final/Ansible/rShowRun.txt', 'w')
     shell = Core.my_paramiko_client_shell(address, username, password)
@@ -104,11 +105,8 @@ def show_dhcp_lease(incoming_msg):
     """Make use of Paramiko to pull the 'show dhcp lease' command output"""
     response = Response()
     router = Core.to_text(incoming_msg)
-    router = router[16:]
-    router_dict = Core.router_select(router)
-    address = router_dict['address']
-    username = router_dict['username']
-    password = router_dict['password']
+    router = Core.command_parser(router)
+    username, password, address = Core.router_needs(router)
     filename = Core.combine_two_strings(router, 'dhcp_lease.txt')
 
     f = open('Outputs/' + filename, 'w')
@@ -122,13 +120,13 @@ def show_dhcp_lease(incoming_msg):
 def delete_int(incoming_msg):
     """Delete an interface. Use 
     delete int 'int name'"""
+    # Delete int will require a different parser.
     response = Response()
     message_input = Core.to_text(incoming_msg)
     message_input = message_input[11:]
     name = message_input[:2]
     interface = message_input[3:]
     device_dict = Core.router_select(name)
-
     
     usefulP.delete_int(url_base.format(h=device_dict['address']), interface, device_dict['username'], device_dict['password'])
     response.markdown += "Deleted interface " + interface + "On device: " + name
@@ -146,6 +144,26 @@ def run_docker(incoming_msg):
     response = Response()
     response.markdown+=usefulP.cleanup_docker()
     return response
+#Monitor
+def init_monitor(incoming_msg):
+    response = Response()
+    response.markdown+=usefulP.monitor_init.run()
+    return response
+def del_cron(incoming_msg):
+    response = Response()
+    response.markdown+=usefulP.monitor_init.delete_cron()
+    return response
+
+#Docker
+def check_docker(incoming_msg):
+    response = Response()
+    response.markdown+=usefulP.check_docker()
+    return response
+def run_docker(incoming_msg):
+    response = Response()
+    response.markdown+=usefulP.run_docker()
+    return response
+
 #Monitor
 def init_monitor(incoming_msg):
     response = Response()
@@ -195,14 +213,14 @@ bot.set_greeting(greeting)
 
 # Add Bot's Commands
 # -------- Riley's Clean Stuff -----------------------
-bot.add_command(
-    "show interfaces", "List all interfaces and their IP addresses", get_int_ips)
+bot.add_command("show interfaces", "SYNTAX: show interfaces 'device'", get_int_ips)
 bot.add_command("attachmentActions", "*", usefulC.handle_make_int_card)
 bot.add_command("make int", "show an adaptive card", usefulC.show_make_int_card)
-# bot.add_command("make int", "show an adaptive card", make_int_card)
-bot.add_command("delete int", "Delete an interface. 'delete int int_name'", delete_int)
-bot.add_command("show run", "Shows the running configuration of router", show_run_config)
-bot.add_command("show dhcp lease", "Paramiko to show dhcp lease on specified router", show_dhcp_lease)
+# bot.add_command("make int", "show an adaptive card", make_int_card--Riley--)
+bot.add_command("delete int", "SYNTAX: delete int 'device' 'int_name'", delete_int)
+bot.add_command("show run", "SYNTAX: show run 'device'", show_run_config)
+bot.add_command("show dhcp lease", "SYNTAX: 'show dhcp lease 'device'", show_dhcp_lease)
+bot.add_command("delete docker", "Deletes the container from docker", usefulP.delete_docker)
 # -----------------------------------------------------
 # -------- Brock's Secret Stuff -----------------------
 bot.add_command("update vars", "Updating Vars", update_vars)

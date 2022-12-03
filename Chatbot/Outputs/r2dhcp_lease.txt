@@ -18,9 +18,9 @@ CSR2#show dhcp lease
 Temp IP addr: 192.168.56.106  for peer on Interface: GigabitEthernet1
 Temp  sub net mask: 255.255.255.0
    DHCP Lease server: 192.168.56.100, state: 5 Bound
-   DHCP transaction id: 1401
+   DHCP transaction id: 13A9
    Lease: 600 secs,  Renewal: 300 secs,  Rebind: 525 secs
-   Next timer fires after: 00:04:43
+   Next timer fires after: 00:01:53
    Retry count: 0   Client-ID: cisco-0800.2733.d731-Gi1
    Client-ID hex dump: 636973636F2D303830302E323733332E
                        643733312D476931
