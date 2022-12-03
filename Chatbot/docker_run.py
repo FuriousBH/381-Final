@@ -17,19 +17,11 @@ def Docker_Check():
     # print(result)
     # If Image not found download
     if docker_img not in result:
-<<<<<<< HEAD
-        not_found = (f'Docker img: {docker_img} not Found')
-        os.system(f'docker pull {image}')
-        return not_found
-    else:
-        found = (f'Docker Image: {docker_img} Found')
-=======
         not_found = f'Docker img: {docker_img} not Found'
         os.system(f'docker pull {image}')
         return not_found
     else:
         found = f'Docker Image: \'{docker_img}\' Found'
->>>>>>> origin/main
     # print(type(result))
         return found
 
@@ -38,20 +30,6 @@ def Docker_Run():
     # -t A terminal that can be accessed
     # -d Background so it doesn't take over the Flask Terminal
     # -Riley 11/24
-<<<<<<< HEAD
-    response=''
-    # name=os.popen('docker container ls --quiet --filter "name=CNIT"').read()
-    
-    #Image Not Found Test
-    if name in (subprocess.run('docker ps -a', shell=True, check=True).stdout):
-        
-        command=(f'docker start -d --name {name} -p 3000:3000 -p 57500:57500 {image}')
-    else:
-        response +=('Creating first time image.')
-        command=(f'docker run -d --name {name} -p 3000:3000 -p 57500:57500 {image}')
-        
-    response += f"Starting Image {name}"
-=======
     response = ''
     #Image Not Found Test
     # You were checking docker container ls, but we were looking for existing docker storage.
@@ -63,7 +41,6 @@ def Docker_Run():
         command=(f'docker run -dit --name {name} -p 3000:3000 -p 57500:57500 {image}')
         
     response = f"Starting Image {name}"
->>>>>>> origin/main
     # -d 
     os.system(command)
     return response
@@ -80,11 +57,7 @@ def Docker_Cleanup():
     os.system(command)
     print(f'Stopping Container {name}')
     # Stopping the container takes time. This is a placeholder for pausing
-<<<<<<< HEAD
-    sleep(20)
-=======
     sleep(15)
->>>>>>> origin/main
     # print('='*5,'Removing Container','='*5)
     # os.system(command2)
 
