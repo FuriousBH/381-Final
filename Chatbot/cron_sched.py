@@ -3,11 +3,14 @@
 
 from crontab import CronTab
 import subprocess
+import os
 
 def create_cron(rep_time,pyScript,remark):
     # True= current user
     my_cron = CronTab(user=True)
     # Specific case when every 90 seconds
+    path=os.path.dirname(os.path.abspath(__file__))+"/"
+    pyScript=f"cd {path};{pyScript}"
     if rep_time==90:
         job = my_cron.new(command=(f'sleep 90;{pyScript}'), comment=remark)
         job.minute.every(1)

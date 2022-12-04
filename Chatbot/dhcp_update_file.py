@@ -1,7 +1,13 @@
 import myparamiko as paramiko
 import core_skills as Core
+
 def run(incoming_msg):
-    router = Core.to_text(incoming_msg)
+    # workaround for Keith's auto update
+    if incoming_msg is 'r1':
+        router='r1'
+    else:
+        router = Core.to_text(incoming_msg)
+    # end workaround
     router = Core.command_parser(router)
     username, password, address = Core.router_needs(router)
     filename = Core.combine_two_strings(router, 'dhcp_lease.txt')

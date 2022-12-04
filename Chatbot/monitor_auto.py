@@ -4,6 +4,7 @@ import dhcp_update_file
 # import Brock_Ansible
 ip_net='172.16.0.'
 def main():
+    dhcp_update_file.run('r1')
     dhcp_info=dhcp_parser.find_new_dhcp_ip(ip_net)
     #Array of info
     # print(dhcp_info)
