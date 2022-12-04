@@ -1,15 +1,9 @@
 # parse through r1dhcp_lease.txt
-#dhcp changed
-# or 
-# lease time
-# call show_run_config
-from time import sleep
-# For automation need full filepath
-# import os
+# find dhcp changed
+# Interface, IP, Renewal time, and Time to next change
+
 def find_new_dhcp_ip(expected_ip_net):
     #Internal Router that changes DHCP file
-    
-    # current_dir = os.getcwd()
     file='Outputs/r1dhcp_lease.txt'
     #Lines to find
     ip_addr_pre='Temp IP addr: '
