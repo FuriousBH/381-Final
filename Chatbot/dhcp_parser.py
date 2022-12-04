@@ -82,11 +82,6 @@ def find_new_dhcp_ip(expected_ip_net):
     # call Ansiblke()
 # def main():
 '''
-waiting time
-Need to convert 00:00:00 > seconds
-Idea, make task run in x seconds
-'''
-'''
 APPENDIX
 Useful debug during line parsing:
             if input in line:

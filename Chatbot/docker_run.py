@@ -66,7 +66,7 @@ def Docker_Cleanup():
     return name
 
 def Docker_Delete():
-    """We all gotta go away at some point.."""
+    #Delete Docker Container = var(name)
     response = ''
     
     if name in (os.popen('docker ps -a --filter "name=CNIT"').read()):

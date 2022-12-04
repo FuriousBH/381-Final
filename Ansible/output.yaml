@@ -1,0 +1,4 @@
+oldCrypto: crypto isakmp key cisco address 172.16.0.2
+newCrypto: '***                                       ***'
+oldSetPeer: set peer 172.16.0.2
+newSetPeer: ''

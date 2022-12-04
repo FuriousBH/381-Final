@@ -4,7 +4,7 @@ yaml = ruamel.yaml.YAML()
 
 #reads show run file and splits lines
 showRun = open('rShowRun.txt', 'r').read().splitlines()
-
+print(showRun)
 #opens the vars.yaml file, changes the old info with the new information
 with open('vars.yaml', 'r') as read_file:
     contents = yaml.load(read_file)

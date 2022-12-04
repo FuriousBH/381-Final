@@ -28,7 +28,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://f94e-66-188-182-24.ngrok.io"
+bot_url = "https://04cf-66-188-244-232.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -127,7 +127,7 @@ def delete_int(incoming_msg):
     usefulP.delete_int(url_base.format(h=device_dict['address']), interface, device_dict['username'], device_dict['password'])
     response.markdown += "Deleted interface " + interface + "On device: " + name
     return response
-#Docker
+# MDT - Setup - Docker
 def check_docker(incoming_msg):
     response = Response()
     response.markdown+=usefulP.check_docker()
@@ -136,48 +136,27 @@ def run_docker(incoming_msg):
     response = Response()
     response.markdown+=usefulP.run_docker()
     return response
-def run_docker(incoming_msg):
+def del_docker(incoming_msg):
     response = Response()
-    response.markdown+=usefulP.cleanup_docker()
+    response.markdown+=usefulP.delete_docker()
     return response
-#Monitor
-def init_monitor(incoming_msg):
-    response = Response()
-    response.markdown+=usefulP.monitor_init.run()
-    return response
-def del_cron(incoming_msg):
-    response = Response()
-    response.markdown+=usefulP.monitor_init.delete_cron()
-    return response
-
-#Docker
-def check_docker(incoming_msg):
-    response = Response()
-    response.markdown+=usefulP.check_docker()
-    return response
-def run_docker(incoming_msg):
-    response = Response()
-    response.markdown+=usefulP.run_docker()
-    return response
-
-#Monitor
-def init_monitor(incoming_msg):
-    response = Response()
-    response.markdown+=usefulP.monitor_init.run()
-    return response
-def del_cron(incoming_msg):
-    response = Response()
-    response.markdown+=usefulP.monitor_init.delete_cron()
-    return response
-
+# MDT - Setup Router
 def push_subs(incoming_msg):
     """Keith's Subscription stuff, just testing"""
     response = Response()
     subscriptions = sub_mdt_file.setup()
-    
     response.markdown = f"Shut down {subscriptions}"
-    
     return response
+#Monitor - Cron
+def init_monitor(incoming_msg):
+    response = Response()
+    response.markdown+=monitor_init.run()
+    return response
+def del_cron(incoming_msg):
+    response = Response()
+    response.markdown+=monitor_init.delete_cron()
+    return response
+
 
 # -------- Brock's Secret Stuff -----------------------
 def update_vars(incoming_msg):
@@ -216,7 +195,7 @@ bot.add_command("make int", "show an adaptive card", usefulC.show_make_int_card)
 bot.add_command("delete int", "SYNTAX: delete int 'device' 'int_name'", delete_int)
 bot.add_command("show run", "SYNTAX: show run 'device'", show_run_config)
 bot.add_command("show dhcp lease", "SYNTAX: 'show dhcp lease 'device'", show_dhcp_lease)
-bot.add_command("delete docker", "Deletes the container from docker", usefulP.delete_docker)
+bot.add_command("delete docker", "Deletes the container from docker", del_docker)
 # -----------------------------------------------------
 # -------- Brock's Secret Stuff -----------------------
 bot.add_command("update vars", "Updating Vars", update_vars)

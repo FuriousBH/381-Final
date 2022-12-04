@@ -34,9 +34,9 @@ def run(incoming_msg):
     # Create Cron Jobs
     # 1. Find DHCP timers
     ip_found,interval_time,time_to=dhcp_info()
-    ip_test=(ip_found) not in ip_net
-    print(ip_test)
-    if ip_test and interval_time==0 and time_to==0:
+    vpn_ip_test=(ip_found) in ip_net
+    print(vpn_ip_test)
+    if vpn_ip_test and interval_time==0 and time_to==0:
         print(f'EXPECTED IP NET {ip_net} NOT FOUND')
         #FATAL ERROR
         # response.markdown += str(f"{cron_del} and slept for {time_to}. {cron_create}")
