@@ -2,11 +2,6 @@ import myparamiko as m
 ### For RESTCONF
 import requests
 import json
-### for Docker
-import docker_run as docker
-from webexteamsbot.models import Response
-
-
 from requests.auth import HTTPBasicAuth
 
 # Skills for pushing configs
@@ -58,37 +53,29 @@ def delete_int(url, name, username, password):
                                verify=False)
     return ""
 # Commands for interacting with Docker
-def check_docker(incoming_msg):
-    """Makes use of Keith's lib. Nothing to add atm"""
-    response = Response()
-    check = docker.Docker_Check()
+# def check_docker():
+#     """Makes use of Keith's lib. Nothing to add atm"""
+#     check = docker.Docker_Check()
+#     return f"{check}"
 
-    response.markdown = f"{check}"
-    
-    return response
+# def run_docker():
+#     """Keith's Docker stuff, just testing atm"""
 
-def run_docker(incoming_msg):
-    """Keith's Docker stuff, just testing atm"""
-    response = Response()
-    run = docker.Docker_Run()
-    response.markdown = f"{run}"
-    
-    return response
+#     run = docker.Docker_Run()
 
-def cleanup_docker(incoming_msg):
-    """Keith's Docker Stuff, just testing"""
-    response = Response()
-    container_id = docker.Docker_Cleanup()
     
-    response.markdown = f"Shut down {container_id}"
-    
-    return response
+#     return f"{run}"
 
-def delete_docker(incoming_msg):
-    """Deleting the Docker Container --Riley 11/29/2022"""
-    response = Response()
-    result = docker.Docker_Delete()
+# def cleanup_docker():
+#     """Keith's Docker Stuff, just testing"""
+
+#     container_id = docker.Docker_Cleanup()
     
-    response.markdown = result
+#     return f"Shut down {container_id}"
+
+# def delete_docker():
+#     """Deleting the Docker Container --Riley 11/29/2022"""
+
+#     result = docker.Docker_Delete()
     
-    return response
+#     return result

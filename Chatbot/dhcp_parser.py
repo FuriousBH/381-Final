@@ -6,6 +6,7 @@
 from time import sleep
 
 def find_new_dhcp_ip(expected_ip_net):
+    #Internal Router that changes DHCP file
     file='Outputs/r1dhcp_lease.txt'
     #Lines to find
     ip_addr_pre='Temp IP addr: '
@@ -68,8 +69,6 @@ def find_new_dhcp_ip(expected_ip_net):
             #     print(waiting_time) # Type = Array
             #     print(converted_waiting_time) # Type = INT
                 break
-            elif vpn_int_ip not in ip_addr1 and waiting_time!='':
-                return [interface,ip_addr1,repeat_time,converted_waiting_time]
                 # don't look for next lines
     
     #Returning Data

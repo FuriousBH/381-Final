@@ -63,7 +63,8 @@ def Docker_Cleanup():
 
     #useful command for removing all instances of docker in cli
     #docker rm $( docker ps -aq )
-    return name
+    response=f"Shut down {name}"
+    return response
 
 def Docker_Delete():
     #Delete Docker Container = var(name)

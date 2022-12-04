@@ -7,7 +7,9 @@ import card_skills as usefulC
 import sub_mdt_file
 import myparamiko as paramiko
 import core_skills as Core
+import docker_skills
 import monitor_init
+import dhcp_update_file
 from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
 
@@ -28,7 +30,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://4d6d-66-188-244-232.ngrok.io"
+bot_url = "https://6a08-66-188-244-232.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -99,18 +101,8 @@ def show_run_config(incoming_msg):
 
 def show_dhcp_lease(incoming_msg):
     """Make use of Paramiko to pull the 'show dhcp lease' command output"""
-    response = Response()
-    router = Core.to_text(incoming_msg)
-    router = Core.command_parser(router)
-    username, password, address = Core.router_needs(router)
-    filename = Core.combine_two_strings(router, 'dhcp_lease.txt')
-
-    f = open('Outputs/' + filename, 'w')
-    shell = Core.my_paramiko_client_shell(address, username, password)
-    response = paramiko.show(shell, "show dhcp lease")
-    f.writelines([response])
-    f.close()    
-
+    # response = Response()
+    response=dhcp_update_file.run(incoming_msg)
     return response
 
 def delete_int(incoming_msg):
@@ -130,15 +122,19 @@ def delete_int(incoming_msg):
 # MDT - Setup - Docker
 def check_docker(incoming_msg):
     response = Response()
-    response.markdown+=usefulP.check_docker()
+    response.markdown=docker_skills.Docker_Check()
     return response
 def run_docker(incoming_msg):
     response = Response()
-    response.markdown+=usefulP.run_docker()
+    response.markdown=docker_skills.Docker_Run()
     return response
 def del_docker(incoming_msg):
     response = Response()
-    response.markdown+=usefulP.delete_docker()
+    response.markdown=docker_skills.Docker_Delete()
+    return response
+def stop_docker(incoming_msg):
+    response = Response()
+    response.markdown=docker_skills.Docker_Cleanup()
     return response
 # MDT - Setup Router
 def push_subs(incoming_msg):
@@ -150,11 +146,11 @@ def push_subs(incoming_msg):
 #Monitor - Cron
 def init_monitor(incoming_msg):
     response = Response()
-    response.markdown+=monitor_init.run()
+    response.markdown=monitor_init.run(incoming_msg)
     return response
 def del_cron(incoming_msg):
     response = Response()
-    response.markdown+=monitor_init.delete_cron()
+    response.markdown=monitor_init.delete_cron()
     return response
 
 
@@ -195,17 +191,17 @@ bot.add_command("make int", "show an adaptive card", usefulC.show_make_int_card)
 bot.add_command("delete int", "SYNTAX: delete int 'device' 'int_name'", delete_int)
 bot.add_command("show run", "SYNTAX: show run 'device'", show_run_config)
 bot.add_command("show dhcp lease", "SYNTAX: 'show dhcp lease 'device'", show_dhcp_lease)
-bot.add_command("delete docker", "Deletes the container from docker", del_docker)
+bot.add_command("docker delete", "Deletes the container from docker", del_docker)
 # -----------------------------------------------------
 # -------- Brock's Secret Stuff -----------------------
 bot.add_command("update vars", "Updating Vars", update_vars)
 # -----------------------------------------------------
 # -------- Keith's Public Stuff -----------------------
-bot.add_command("check docker", "Check Docker image", usefulP.check_docker)
-bot.add_command("run docker", "Runs the docker image jeremycohoe/tig_mdt", usefulP.run_docker)
-bot.add_command("clean docker", "Stops docker, and removes the container", usefulP.cleanup_docker)
-bot.add_command("vpn automate","runs monitor initialization with cron jobs and ansible",monitor_init.run)
-bot.add_command("cron delete","Purely for lab purposes, remove corn jobs from vpn automate",monitor_init.delete_cron)
+bot.add_command("docker check", "Check Docker image", check_docker)
+bot.add_command("docker run", "Runs the docker image jeremycohoe/tig_mdt",run_docker)
+bot.add_command("docker stop", "Stops docker", stop_docker)
+bot.add_command("vpn automate","SYNTAX: 'vpn automate 'device',runs monitor initialization with cron jobs and ansible",init_monitor)
+bot.add_command("vpn stop","Purely for lab purposes, remove cron jobs from vpn automate",del_cron)
 # bot.add_command("add subs", "Adds subscriptions from subscriptions.yml",push_subs)
 
 # -----------------------------------------------------
