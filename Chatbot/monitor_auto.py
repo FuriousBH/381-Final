@@ -1,4 +1,6 @@
 import dhcp_parser
+
+
 # import Brock_Ansible
 ip_net='172.16.0.'
 def main():
