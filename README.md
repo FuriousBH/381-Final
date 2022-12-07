@@ -14,7 +14,7 @@ In this project our team utilized skills we developed throughout the CNIT-381 co
 
 ### Ansible
 1.  Ensure that you have installed Ansible onto your device with the command, python3 -m pip install --user ansible
-2.  Using the "show run" command in the chatbot will issue the command "show ip interface brief" on the router specified in the host file.
+2.  Using the "show run *router name*" command in the chatbot will issue the command "show ip interface brief" on the router specified in the host file.
 
 ![image](https://user-images.githubusercontent.com/99046455/206268266-c02aac33-030f-45a2-b1b6-b890189674c5.png)
 
@@ -23,8 +23,8 @@ In this project our team utilized skills we developed throughout the CNIT-381 co
 
 ![image](https://user-images.githubusercontent.com/99046455/206273954-4c8dbae6-9010-4964-857f-ce941fdf82a8.png)
 
-6. Now using the "update_vars" command with the chat bot, the rShowRun.txt file will be read, split into lines, then line 18 will be split by the blank character ' ' which allows us to specifically grab the IP address we want. Lastly, that command will update the vars.yaml file with the new IP address, and move the previous IP to the oldIP variable.
-7. Finally, the "update_tunnel" chat bot command will issue a shell command that will trigger the ansible playbook "updateTunnel-playbook.yaml" which will update the tunnel information of the router who is trying to peer with the dynamically changing router from the branch site.
+6. Now using the "update vars" command with the chat bot, the rShowRun.txt file will be read, split into lines, then line 18 will be split by the blank character ' ' which allows us to specifically grab the IP address we want. Lastly, that command will update the vars.yaml file with the new IP address, and move the previous IP to the oldIP variable.
+7. Finally, the "update tunnel" chat bot command will issue a shell command that will trigger the ansible playbook "updateTunnel-playbook.yaml" which will update the tunnel information of the router who is trying to peer with the dynamically changing router from the branch site.
 
 
 
