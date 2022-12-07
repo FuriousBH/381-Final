@@ -14,6 +14,7 @@ from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
 
 # -------- Brock's Secret Stuff -----------------------
+import os
 import sys
 import ruamel.yaml
 yaml = ruamel.yaml.YAML()
@@ -174,6 +175,11 @@ def update_vars(incoming_msg):
     with open('vars.yaml', 'w') as dump_file:
            yaml.dump(contents, dump_file)
     return response
+
+def update_tunnel(incoming_msg):
+    response = Response()
+           os.system('ansible-playbook updateTunnel-playbook.yaml')
+    return response
 # -----------------------------------------------------
 
 
@@ -193,6 +199,7 @@ bot.add_command("docker delete", "Deletes the container from docker", del_docker
 # -----------------------------------------------------
 # -------- Brock's Secret Stuff -----------------------
 bot.add_command("update vars", "Updating Vars", update_vars)
+bot.add_command("update tunnel", "Updating Tunnel", update_tunnel)
 # -----------------------------------------------------
 # -------- Keith's Public Stuff -----------------------
 bot.add_command("docker check", "Check Docker image", check_docker)
