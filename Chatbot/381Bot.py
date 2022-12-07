@@ -178,7 +178,7 @@ def update_vars(incoming_msg):
 
 def update_tunnel(incoming_msg):
     response = Response()
-           os.system('ansible-playbook updateTunnel-playbook.yaml')
+    os.system('ansible-playbook updateTunnel-playbook.yaml')
     return response
 # -----------------------------------------------------
 
