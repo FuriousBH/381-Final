@@ -16,7 +16,7 @@ In this project our team utilized skills we developed throughout the CNIT-381 co
 1.  Ensure that you have installed Ansible onto your device with the command, "python3 -m pip install --user ansible"
 2.  Using the "show run *router name*" command in the chatbot will issue the command "show ip interface brief" on the router specified in the host file.
 
-![image](https://user-images.githubusercontent.com/99046455/206268266-c02aac33-030f-45a2-b1b6-b890189674c5.png)
+![image](https://user-images.githubusercontent.com/99046455/206283453-e7c4cab2-8b1c-4730-9b16-d1075c62a712.png)
 
 3. After that command is succesfully issued, it will save the output into a text file "rShowRun.txt"
 4. Pay special attention to line 19, or if we are using a list value [18], it contains the updated IP of the interface
