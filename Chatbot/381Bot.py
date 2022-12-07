@@ -30,7 +30,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://8f0b-66-188-244-232.ngrok.io"
+bot_url = "https://e119-66-188-182-24.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -83,7 +83,7 @@ def get_int_ips(incoming_msg):
 
 # Function for pulling the running configuration
 # This function is spefically for Ansible
-def show_run_config(incoming_msg):
+def show_ip_brief(incoming_msg):
     """Use paramiko to show the running configuration, and print add it to a directory"""
     # Todo: Make a method for selecting a specific router
     response = Response()
@@ -93,7 +93,7 @@ def show_run_config(incoming_msg):
     
     f = open('/home/devasc/381-Final/Ansible/rShowRun.txt', 'w')
     shell = Core.my_paramiko_client_shell(address, username, password)
-    response = paramiko.show(shell, "show run | section include crypto isakmp")
+    response = paramiko.show(shell, "show ip int brief")
     f.writelines([response])
     f.close()
     
@@ -189,7 +189,7 @@ bot.add_command("attachmentActions", "*", usefulC.handle_make_int_card)
 bot.add_command("make int", "show an adaptive card", usefulC.show_make_int_card)
 # bot.add_command("make int", "show an adaptive card", make_int_card--Riley--)
 bot.add_command("delete int", "SYNTAX: delete int 'device' 'int_name'", delete_int)
-bot.add_command("show run", "SYNTAX: show run 'device'", show_run_config)
+bot.add_command("show run", "SYNTAX: show run 'device'", show_ip_brief)
 bot.add_command("show dhcp lease", "SYNTAX: 'show dhcp lease 'device'", show_dhcp_lease)
 bot.add_command("docker delete", "Deletes the container from docker", del_docker)
 # -----------------------------------------------------
