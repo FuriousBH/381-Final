@@ -161,7 +161,7 @@ def update_vars(incoming_msg):
     response = Response()
     #reads show run file and splits lines
     showRun = open('rShowRun.txt', 'r').read().splitlines()
-
+    splitShowRun = showRun[22].split(' ')
     #opens the vars.yaml file, changes the old info with the new information
     with open('../Ansible/vars.yaml', 'r') as read_file:
            contents = yaml.load(read_file)
