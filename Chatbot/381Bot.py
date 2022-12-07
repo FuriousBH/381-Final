@@ -14,11 +14,13 @@ from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
 
 # -------- Brock's Secret Stuff -----------------------
+import os
 import sys
 import ruamel.yaml
 yaml = ruamel.yaml.YAML()
 
 showRun = open('rShowRun.txt', 'r').read().splitlines()
+splitShowRun = showRun[18].split(' ')
 # -----------------------------------------------------
 
 # RESTCONF Setup
@@ -159,22 +161,24 @@ def update_vars(incoming_msg):
     response = Response()
     #reads show run file and splits lines
     showRun = open('rShowRun.txt', 'r').read().splitlines()
-
+    splitShowRun = showRun[18].split(' ')
     #opens the vars.yaml file, changes the old info with the new information
     with open('../Ansible/vars.yaml', 'r') as read_file:
            contents = yaml.load(read_file)
-           #print(contents)
            #Assign the previous IP info to the Old variable
-           contents['oldCrypto'] = contents['newCrypto']
-           contents['oldSetPeer'] = contents['newSetPeer']
+           contents['oldIP'] = contents['newIP']
            #Updates the New variable with the new IP info
-           contents['newCrypto'] = showRun[5]
-           contents['newSetPeer'] = showRun[14]
-           #print(contents)
+           contents['newIP'] = splitShowRun[7]
+           
 
     #dumps new yaml file into output.yaml 
     with open('vars.yaml', 'w') as dump_file:
            yaml.dump(contents, dump_file)
+    return response
+
+def update_tunnel(incoming_msg):
+    response = Response()
+    os.system('ansible-playbook updateTunnel-playbook.yaml')
     return response
 # -----------------------------------------------------
 
@@ -195,6 +199,7 @@ bot.add_command("docker delete", "Deletes the container from docker", del_docker
 # -----------------------------------------------------
 # -------- Brock's Secret Stuff -----------------------
 bot.add_command("update vars", "Updating Vars", update_vars)
+bot.add_command("update tunnel", "Updating Tunnel", update_tunnel)
 # -----------------------------------------------------
 # -------- Keith's Public Stuff -----------------------
 bot.add_command("docker check", "Check Docker image", check_docker)

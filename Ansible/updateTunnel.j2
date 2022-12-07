@@ -1,0 +1,5 @@
+no crypto isakmp key cisco address {{ oldIP }}
+crypto isakmp key cisco address {{ newIP }}
+crypto map Crypt 10 ipsec-isakmp
+    no set peer {{ oldIP }}
+    set peer {{ newIP }}

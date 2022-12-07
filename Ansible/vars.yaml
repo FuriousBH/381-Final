@@ -1,4 +1,2 @@
-oldCrypto: crypto isakmp key cisco address 172.16.0.2
-newCrypto: crypto isakmp key cisco address 172.16.0.2
-oldSetPeer: set peer 172.16.0.2
-newSetPeer: set peer 172.16.0.2
+oldIP: 172.16.0.6
+newIP: 172.16.0.6
