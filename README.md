@@ -13,7 +13,7 @@ In this project our team utilized skills we developed throughout the CNIT-381 co
 2.   
 
 ### Ansible
-1.  Ensure that you have installed Ansible onto your device with the command, python3 -m pip install --user ansible
+1.  Ensure that you have installed Ansible onto your device with the command, "python3 -m pip install --user ansible"
 2.  Using the "show run *router name*" command in the chatbot will issue the command "show ip interface brief" on the router specified in the host file.
 
 ![image](https://user-images.githubusercontent.com/99046455/206268266-c02aac33-030f-45a2-b1b6-b890189674c5.png)
