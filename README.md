@@ -24,7 +24,10 @@ In this project our team utilized skills we developed throughout the CNIT-381 co
 ![image](https://user-images.githubusercontent.com/99046455/206273954-4c8dbae6-9010-4964-857f-ce941fdf82a8.png)
 
 6. Now using the "update vars" command with the chat bot, the rShowRun.txt file will be read, split into lines, then line 18 will be split by the blank character ' ' which allows us to specifically grab the IP address we want. Lastly, that command will update the vars.yaml file with the new IP address, and move the previous IP to the oldIP variable.
-7. Finally, the "update tunnel" chat bot command will issue a shell command that will trigger the ansible playbook "updateTunnel-playbook.yaml" which will update the tunnel information of the router who is trying to peer with the dynamically changing router from the branch site.
+
+![image](https://user-images.githubusercontent.com/99046455/206283197-c2a1f125-dc3e-4d4b-93b6-0ab60a5bdf05.png)
+
+8. Finally, the "update tunnel" chat bot command will issue a shell command that will trigger the ansible playbook "updateTunnel-playbook.yaml" which will update the tunnel information of the router who is trying to peer with the dynamically changing router from the branch site.
 
 ![image](https://user-images.githubusercontent.com/99046455/206282598-6fe9be3d-b493-4fc4-8eb0-cd68c7abc5df.png)
 
