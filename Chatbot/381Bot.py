@@ -168,7 +168,7 @@ def update_vars(incoming_msg):
            #Assign the previous IP info to the Old variable
            contents['oldIP'] = contents['newIP']
            #Updates the New variable with the new IP info
-           contents['newIP'] = splitShowRun[1]
+           contents['newIP'] = splitShowRun[7]
            
 
     #dumps new yaml file into output.yaml 
