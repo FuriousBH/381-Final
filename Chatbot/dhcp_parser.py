@@ -80,6 +80,7 @@ def find_new_dhcp_ip(expected_ip_net):
 '''
 APPENDIX
 Useful debug during line parsing:
+        for l_no, line in enumerate(f):
             if input in line:
                 # # Useful Debug
                 # print('string found in a file')

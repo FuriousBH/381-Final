@@ -10,18 +10,9 @@ import core_skills as Core
 import docker_skills
 import monitor_init
 import dhcp_update_file
+import ansible_skills
 from webexteamsbot import TeamsBot
 from webexteamsbot.models import Response
-
-# -------- Brock's Secret Stuff -----------------------
-import os
-import sys
-import ruamel.yaml
-yaml = ruamel.yaml.YAML()
-
-showRun = open('rShowRun.txt', 'r').read().splitlines()
-splitShowRun = showRun[18].split(' ')
-# -----------------------------------------------------
 
 # RESTCONF Setup
 port = '443'
@@ -32,7 +23,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://e119-66-188-182-24.ngrok.io"
+bot_url = "https://b4ee-66-188-244-232.ngrok.io"
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
 # Create a Bot Object
@@ -83,28 +74,10 @@ def get_int_ips(incoming_msg):
             response.markdown +="IP Address: UNCONFIGURED\n"
     return response
 
-# Function for pulling the running configuration
-# This function is spefically for Ansible
-def show_ip_brief(incoming_msg):
-    """Use paramiko to show the running configuration, and print add it to a directory"""
-    # Todo: Make a method for selecting a specific router
-    response = Response()
-    router= Core.to_text(incoming_msg)
-    router = Core.command_parser(router)
-    username, password, address = Core.router_needs(router)
-    
-    f = open('/home/devasc/381-Final/Ansible/rShowRun.txt', 'w')
-    shell = Core.my_paramiko_client_shell(address, username, password)
-    response = paramiko.show(shell, "show ip int brief")
-    f.writelines([response])
-    f.close()
-    
-    return response
-
 def show_dhcp_lease(incoming_msg):
     """Make use of Paramiko to pull the 'show dhcp lease' command output"""
     # response = Response()
-    response=dhcp_update_file.run(incoming_msg)
+    response = dhcp_update_file.run(incoming_msg)
     return response
 
 def delete_int(incoming_msg):
@@ -124,19 +97,19 @@ def delete_int(incoming_msg):
 # MDT - Setup - Docker
 def check_docker(incoming_msg):
     response = Response()
-    response.markdown=docker_skills.Docker_Check()
+    response.markdown = docker_skills.Docker_Check()
     return response
 def run_docker(incoming_msg):
     response = Response()
-    response.markdown=docker_skills.Docker_Run()
+    response.markdown = docker_skills.Docker_Run()
     return response
 def del_docker(incoming_msg):
     response = Response()
-    response.markdown=docker_skills.Docker_Delete()
+    response.markdown = docker_skills.Docker_Delete()
     return response
 def stop_docker(incoming_msg):
     response = Response()
-    response.markdown=docker_skills.Docker_Cleanup()
+    response.markdown = docker_skills.Docker_Cleanup()
     return response
 # MDT - Setup Router
 def push_subs(incoming_msg):
@@ -148,37 +121,31 @@ def push_subs(incoming_msg):
 #Monitor - Cron
 def init_monitor(incoming_msg):
     response = Response()
-    response.markdown=monitor_init.run(incoming_msg)
+    response.markdown = monitor_init.run(incoming_msg)
     return response
 def del_cron(incoming_msg):
     response = Response()
-    response.markdown=monitor_init.delete_cron()
+    response.markdown = monitor_init.delete_cron()
     return response
 
 
 # -------- Brock's Secret Stuff -----------------------
 def update_vars(incoming_msg):
     response = Response()
-    #reads show run file and splits lines
-    showRun = open('rShowRun.txt', 'r').read().splitlines()
-    splitShowRun = showRun[18].split(' ')
-    #opens the vars.yaml file, changes the old info with the new information
-    with open('../Ansible/vars.yaml', 'r') as read_file:
-           contents = yaml.load(read_file)
-           #Assign the previous IP info to the Old variable
-           contents['oldIP'] = contents['newIP']
-           #Updates the New variable with the new IP info
-           contents['newIP'] = splitShowRun[7]
-           
-
-    #dumps new yaml file into output.yaml 
-    with open('vars.yaml', 'w') as dump_file:
-           yaml.dump(contents, dump_file)
+    response=ansible_skills.update_vars(incoming_msg)
     return response
 
 def update_tunnel(incoming_msg):
     response = Response()
-    os.system('ansible-playbook updateTunnel-playbook.yaml')
+    response=ansible_skills.update_tunnel()
+    return response
+# Function for pulling the running configuration
+# This function is specifically for Ansible
+def show_ip_brief(incoming_msg):
+    """Use paramiko to show the running configuration, and print add it to a directory"""
+    # Todo: Make a method for selecting a specific router
+    response = Response()
+    response = ansible_skills.show_ip_brief(incoming_msg)
     return response
 # -----------------------------------------------------
 
