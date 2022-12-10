@@ -4,6 +4,7 @@ import cron_sched
 from time import sleep
 # from threading import Timer
 import os
+import ansible_skills
 
 path_command=os.path.dirname(os.path.realpath(__file__))
 print(path_command)

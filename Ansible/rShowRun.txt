@@ -14,11 +14,9 @@ C
 
 
 CSR1#terminal length 0
-CSR1#show run | section include crypto isakmp
-crypto isakmp policy 1
- encryption 3des
- hash md5
- authentication pre-share
- group 2
-crypto isakmp key cisco address 172.16.0.2     
+CSR1#show ip int brief
+Interface              IP-Address      OK? Method Status                Protocol
+GigabitEthernet1       192.168.56.105  YES DHCP   up                    up      
+GigabitEthernet2       172.16.0.2      YES DHCP   up                    up      
+Loopback0              1.1.1.1         YES NVRAM  up                    up      
 CSR1#
