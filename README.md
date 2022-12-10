@@ -196,12 +196,7 @@ Thought it might be kind of nice.
 
 
 
-### Local Setup
-1.   Install ruamel.yaml or pyyaml by issuing this command in the terminal: pip3 install ruamel.yaml OR pip3 install pyyaml, this is important for being able to update yaml files. ruamel.yaml is important for being able to open, modify, and save yaml files from within a python script.
-
-![installPyYAML](https://user-images.githubusercontent.com/99046455/204409091-39012aad-ea3a-404a-8c72-c99aaac3d527.png)
-
-2.   
+ 
 
 ### Ansible
 1.  Ensure that you have installed Ansible onto your device with the command, "python3 -m pip install --user ansible"
