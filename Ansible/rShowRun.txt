@@ -1,4 +1,4 @@
-C
+
 *                                           *
 **                                         **
 ***                                       ***
@@ -13,10 +13,10 @@ C
 
 
 
-CSR1#terminal length 0
-CSR1#show ip int brief
+CSR2#terminal length 0
+CSR2#show ip int brief
 Interface              IP-Address      OK? Method Status                Protocol
-GigabitEthernet1       192.168.56.105  YES DHCP   up                    up      
-GigabitEthernet2       172.16.0.2      YES DHCP   up                    up      
-Loopback0              1.1.1.1         YES NVRAM  up                    up      
-CSR1#
+GigabitEthernet1       192.168.56.106  YES DHCP   up                    up      
+GigabitEthernet2       172.16.0.2      YES manual up                    up      
+Loopback0              2.2.2.2         YES NVRAM  up                    up      
+CSR2#

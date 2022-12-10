@@ -25,6 +25,7 @@ def create_cron(rep_time,pyScript,remark):
     # save cron job
     my_cron.write()
     return (f'Created job: {remark}')
+
 def find_cron(input):
     # sudo crontab -u devasc -l
     cron_jobs=subprocess.run(['sudo', 'crontab', '-u', 'devasc', '-l'], stdout=subprocess.PIPE).stdout.decode('utf-8')
@@ -34,6 +35,7 @@ def find_cron(input):
     else:
         cron_found=(f'No job {input} found')
     return cron_found
+
 def run_cron(cron_job_comment,cron_job_command):
     my_cron = CronTab(user=True)
     flag=False
@@ -48,6 +50,7 @@ def run_cron(cron_job_comment,cron_job_command):
     else:
         return_data=(f'{cron_job_comment} Ran')
     return 
+
 def del_cron(cron_job):
     my_cron = CronTab(user=True)
     flag=0

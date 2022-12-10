@@ -1,11 +1,11 @@
 ### teams Bot ###
 ### Utilities Libraries
-import routers
+# import routers
+# import myparamiko as paramiko
 import pull_skills as useful
 import mod_skills as usefulP
 import card_skills as usefulC
 import sub_mdt_file
-import myparamiko as paramiko
 import core_skills as Core
 import docker_skills
 import monitor_init
@@ -23,7 +23,7 @@ headers = {'Content-Type': 'application/yang-data+json',
 # Bot Details
 bot_email = 'sirbot@webex.bot'
 teams_token = 'YmIxMDIzZWMtNjU3OS00ZjA0LThjN2UtMDE0NWIzNDJkMzk5Y2I0N2I5NzQtNGE1_P0A1_b34062fa-24f1-480f-a815-05d10d8cf4f2'
-bot_url = "https://fff1-66-188-182-24.ngrok.io"
+bot_url = "https://1a1e-66-188-182-24.ngrok.io"
 
 bot_app_name = 'CNIT-381 Network Auto Chat Bot'
 
@@ -157,25 +157,31 @@ bot.set_greeting(greeting)
 
 # Add Bot's Commands
 # -------- Riley's Clean Stuff -----------------------
+# restconf
 bot.add_command("show interfaces", "SYNTAX: show interfaces 'device'", get_int_ips)
 bot.add_command("attachmentActions", "*", usefulC.handle_make_int_card)
 bot.add_command("make int", "show an adaptive card", usefulC.show_make_int_card)
-# bot.add_command("make int", "show an adaptive card", make_int_card--Riley--)
 bot.add_command("delete int", "SYNTAX: delete int 'device' 'int_name'", delete_int)
-bot.add_command("show run", "SYNTAX: show run 'device'", show_ip_brief)
+bot.add_command("show ip brief", "SYNTAX: show run 'device'", show_ip_brief)
+# Paramiko
 bot.add_command("show dhcp lease", "SYNTAX: 'show dhcp lease 'device'", show_dhcp_lease)
+# Bonus
 bot.add_command("docker delete", "Deletes the container from docker", del_docker)
 # -----------------------------------------------------
 # -------- Brock's Secret Stuff -----------------------
+# Ansible
 bot.add_command("update vars", "Updating Vars", update_vars)
 bot.add_command("update tunnel", "Updating Tunnel", update_tunnel)
 # -----------------------------------------------------
 # -------- Keith's Public Stuff -----------------------
+# Monitor
+
+bot.add_command("vpn automate","SYNTAX: 'vpn automate 'device',runs monitor initialization with cron jobs and ansible",init_monitor)
+bot.add_command("vpn stop","Purely for lab purposes, remove cron jobs from vpn automate",del_cron)
+# Bonus
 bot.add_command("docker check", "Check Docker image", check_docker)
 bot.add_command("docker run", "Runs the docker image jeremycohoe/tig_mdt",run_docker)
 bot.add_command("docker stop", "Stops docker", stop_docker)
-bot.add_command("vpn automate","SYNTAX: 'vpn automate 'device',runs monitor initialization with cron jobs and ansible",init_monitor)
-bot.add_command("vpn stop","Purely for lab purposes, remove cron jobs from vpn automate",del_cron)
 # bot.add_command("add subs", "Adds subscriptions from subscriptions.yml",push_subs)
 
 # -----------------------------------------------------

@@ -11,6 +11,7 @@ print(path_command)
 py_command = ('python3 '+f'{path_command}/monitor_auto.py')
 comment = 'VPN_CSR1'
 ip_net='172.16.0.'
+
 def dhcp_info(incoming_msg):
     dhcp_update_file.run(incoming_msg)
     dhcp_info=dhcp_parser.find_new_dhcp_ip(ip_net)
@@ -21,11 +22,13 @@ def dhcp_info(incoming_msg):
     renewal_time=(dhcp_info[2])
     time_til_new_ip=(dhcp_info[3])
     return ip_addr,renewal_time,time_til_new_ip
+
 def delete_cron():
     cron_del=cron_sched.del_cron(comment)
     # print(cron_del)
     return cron_del
 # Insert Time Alternative Method Here
+
 def run(incoming_msg):
     # Delete Cron Jobs
     cron_del=cron_sched.del_cron(comment)

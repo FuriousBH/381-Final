@@ -4,7 +4,7 @@ import os
 import ruamel.yaml
 yaml = ruamel.yaml.YAML()
 fileRShowRun="../Ansible/rShowRun.txt"
-playbook='../Ansible/ansible-playbook updateTunnel-playbook.yaml'
+playbook='ansible-playbook ../Ansible/updateTunnel-Playbook.yaml'
 vpnInt="GigabitEthernet2"
 # showRun = open('../Ansible/rShowRun.txt', 'r').read().splitlines()
 # splitShowRun = showRun[18].split(' ')
@@ -41,9 +41,11 @@ def update_vars(incoming_msg):
     return f'''Searched for {vpnInt}
     Found {response}
     Updated IP to {splitShowRun[1]}'''
+
 def update_tunnel():
     response=os.system(playbook)
     return f'Ran Update Tunnel Playbook\n'
+
 def show_ip_brief(incoming_msg):
     router= Core.to_text(incoming_msg)
     router = Core.command_parser(router)
