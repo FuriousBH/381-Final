@@ -49,7 +49,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![Product Name Screen Shot][product-screenshot]]
+![Product Name Screen Shot][product-screenshot]
 
 This project aims to automate the maintenance of a Cisco Router using a webex chatbot.
 
@@ -79,34 +79,15 @@ To get started, make sure you have Python installed. In addition you will need t
 Make sure that you have Python installed on your machine. <br />
 Feel free to follow the tutorials listed below. <br /> 
 
-* Windows Instructions
-  ```sh
-  https://www.digitalocean.com/community/tutorials/install-python-windows-10
-  ```
-* Linux Install
-  ```sh
-  https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-programming-environment-on-an-ubuntu-20-04-server
-  ```
-* Mac OS Install
-  ```sh
-  https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-macos
-  ```
 
 Download the following libraries
-* pyyaml
+* pyyaml paramiko webexteamsbot
   ```sh
   pip3 install pyyaml
-  ```
-
-* paramiko
-  ```sh
   pip3 install paramiko
-  ```
-
-* webexteamsbot
-  ```sh
   pip3 install webexteamsbot
   ```
+
 This runs on a flask server, so you'll want to ensure that you have that ready to go. <br />
 * Flask
   ```sh
@@ -132,20 +113,19 @@ With that taken care of, the last prerequisite will be to download Ansible
 ### Installation
 
 1. Clone the repo
-   ```sh
-   git clone https://github.com/FuriousBH/381-Final.git
-   ```
+
 
 2. Set up a webex bot.
+    ```sh
+    https://developer.webex.com/docs/bots
+    ```
 
+3. 
 
-3. Navigate to the Directory with the main.py app <br>
+3. Navigate to the Directory with the 381Bot.py app <br>
 ![PWD][PWD-screenshot]]
 
-  <br/> 
-    ```sh
-    python3 main.py
-    ```
+4. Modify the 
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -168,7 +148,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 ## Roadmap
 
 - [This is optional] Let me know if we want this section
-
+<br>Theoreticals and implementations. Two of Guilleman's favorite things...
 
 
 <!-- CONTRIBUTING -->
