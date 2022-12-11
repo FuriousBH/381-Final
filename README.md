@@ -44,6 +44,9 @@
         <li><a href="#ansible">Ansible</a></li>
         <li><a href="#creating-an-interface">Create an Interface</a></li>
     </ul>
+        <ul>
+        <li><a href="#monitor">Monitor</a></li>
+    </ul>
     <li><a href="#roadmap">Roadmap</a></li>
   </ol>
 </details>
@@ -188,8 +191,48 @@ With that taken care of, the last prerequisite will be to download Ansible
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Monitor
+- Commands
+  ```sh
+  vpn automate (device-name-here)
+  vpn stop
+  ```
+- Command Flow for 'vpn automate r2'
+  ```sh
+  381bot.py 
+  > monitor_init.py 
+    # Runs
+    > dhcp_update_file
+    > dhcp_parser
+    # wait for dhcp lease expire
+    # create and run crontab for monitor_auto
+  > monitor_auto.py
+    # Runs
+    > ansible_skill
+        > dhcp_update_file.run
+        # show run
+        show_ip_brief
+        # update vars.yaml
+        update_vars
+        # update tunnel info w/ playbook
+        update_tunnel
+  #Crontab waits until next dhcp lease time
+  ```
+### Monitor Explanation
+We needed a way to time the next dhcp renewal. The way we chose was executing the cisco command "ip dhcp lease". This output allows us to parse the time until a new lease. When the new lease expires, a cron job is created with crontab using the monitor_auto.py. That file is then executed immedietly through crontab. <br>
+Monitor auto then executes the ansible skills. Ansible needs its variables for r2 updated so we executed a cisco ios command show ip brief and return that info to the vars.yaml. Then we update the tunnel info.
+  
 
-
+### Bonus
+This section is for things we researched but not ended up being used.
+- We tried to implement monitor through MDT. MDT is model driven telemetry. Basically it runs telemetry and reports back to a server. This server runs a graphical hub of various variables. When we realized we would have to add routing\DNS to be accessible from the Chatbot, we realized this was not the solution for us.
+- Commands
+```sh
+"docker check" - 'Checks for and downloads MDT image'
+"docker run" - 'Runs the docker image'
+"docker stop" - 'Stops the docker image'
+"docker delete" - 'Deletes the docker image'
+``` 
 <!-- ROADMAP -->
 ## Roadmap
 
