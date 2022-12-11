@@ -4,7 +4,7 @@ import ansible_skills
 ip_net='172.16.0.'
 router_dev='r2'
 def main():
-#update DHCP lease txt - could cut, but its could be useful outside program
+# UPDATE DHCP LEASE.TXT - could cut, but its could be useful outside program
     dhcp_update_file.run(router_dev)
 # ANSIBLE
     # show run
@@ -13,7 +13,7 @@ def main():
     ansible_skills.update_vars(router_dev)
     # update tunnel info w/ playbook
     ansible_skills.update_tunnel()
-# Array of info for debug
+# DEBUG - Array of info for 
     # dhcp_info=dhcp_parser.find_new_dhcp_ip(ip_net)
     # print(dhcp_info)
     # interface=dhcp_info[0]
