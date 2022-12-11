@@ -120,13 +120,20 @@ With that taken care of, the last prerequisite will be to download Ansible
     https://developer.webex.com/docs/bots
     ```
 
-3. 
 
 3. Navigate to the Directory with the 381Bot.py app <br>
-![PWD][PWD-screenshot]]
+![PWD][PWD-screenshot]
 
-4. Modify the 
+4. Modify the routers.py dictionary to match your devices & the Ansible hosts file with the address of the Branch Router.<br>
 
+![Router][Routers-screenshot]
+<br>
+![ANSIBLE][AnsibleHosts-screenshot]
+
+5. Update your Bot URL with the relevant ngrok Forwarding URL.
+![Ngrok][Ngrok-screenshot]
+<br>
+![BotUrl][BotUrl-screenshot]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -178,6 +185,10 @@ Thought it might be kind of nice.
 [Flask.js]: https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white
 [flask-url]: https://flask.palletsprojects.com/en/2.2.x/
 [PWD-screenshot]: images/PWD.png
+[Routers-screenshot]: images/Routers.png
+[AnsibleHosts-screenshot]: images/Hosts.png
+[Ngrok-screenshot]: images/ngrok.png
+[BotUrl-screenshot]: images/BotUrl.PNG
 
 
 
