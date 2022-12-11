@@ -44,8 +44,9 @@
         <li><a href="#ansible">Ansible</a></li>
         <li><a href="#creating-an-interface">Create an Interface</a></li>
     </ul>
-        <ul>
+    <ul>
         <li><a href="#monitor">Monitor</a></li>
+        <li><a href="#bonus">Bonus</a></li>
     </ul>
     <li><a href="#roadmap">Roadmap</a></li>
   </ol>
@@ -236,15 +237,22 @@ This section is for things we researched but not ended up being used.
 <!-- ROADMAP -->
 ## Roadmap
 
-- [This is optional] Let me know if we want this section
-<br>Theoreticals and implementations. Two of Guilleman's favorite things...
+- Changing static variables
+Static variables for dhcp found in these files
+dhcp_parser.py, monitor_init.py, monitor_auto.py
+  - dhcp_parser.py 
+    - file - needs to be progammatic based on the user input. In case of multiple branch locations
 
-
+  - monitor_init.py
+    - router_dev='r2'
+  - monitor_auto.py
+    - ip_net=172.16.0 - would want this in a config file of some sort. Different IP schemas
+    - router_dev='r2'
 <!-- CONTRIBUTING -->
 ## Contributing
-
-This is a little thing so we can all put in our own information. <br>
-Thought it might be kind of nice.
+RA - Led the team and developed RESConf skills, useful tools, and general oversite over production.
+<br>BH - developed Ansible solution.
+<br>KG - developed Monitoring solution and integration with Ansible.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
