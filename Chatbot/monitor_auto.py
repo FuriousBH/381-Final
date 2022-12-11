@@ -1,10 +1,11 @@
 import dhcp_parser
 import dhcp_update_file
-
+import ansible_skills
 # import Brock_Ansible
 ip_net='172.16.0.'
+router_dev='r2'
 def main():
-    dhcp_update_file.run('r1')
+    dhcp_update_file.run(router_dev)
     dhcp_info=dhcp_parser.find_new_dhcp_ip(ip_net)
     #Array of info
     # print(dhcp_info)
@@ -25,6 +26,12 @@ def main():
     #Brock Code
     # brock_ansible(ip_addr)
     print('Brocks Code Here')
+    # show run
+    ansible_skills.show_ip_brief(router_dev)
+    # update vars.yaml
+    ansible_skills.update_vars(router_dev)
+    # update tunnel info w/ playbook
+    ansible_skills.update_tunnel()
 if __name__ == "__main__":
     main()
 
