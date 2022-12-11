@@ -6,7 +6,7 @@ router_dev='r2'
 def main():
 #update DHCP lease txt - could cut, but its could be useful outside program
     dhcp_update_file.run(router_dev)
-    print('Brocks Code Here')
+# ANSIBLE
     # show run
     ansible_skills.show_ip_brief(router_dev)
     # update vars.yaml
