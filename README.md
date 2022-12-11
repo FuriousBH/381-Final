@@ -85,10 +85,17 @@ Feel free to follow the tutorials listed below. <br />
 
 
 Download the following libraries
-* pyyaml paramiko webexteamsbot
-  ```sh
-  pip3 install pyyaml
+* adaptivecardbuilder, Flask, Jinja2, ncclient, paramiko, python_crontab, PyYAML, requests, ruamel.base, webexteamsbot
+```sh
+  pip3 install adaptivecardbuilder
+  pip3 install Flask
+  pip3 install Jinja2
+  pip3 install ncclient
   pip3 install paramiko
+  pip3 install python_crontab
+  pip3 install PyYAML
+  pip3 install requests
+  pip3 install ruamel.base
   pip3 install webexteamsbot
   ```
 
