@@ -40,6 +40,10 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <ul>
+        <li><a href="#ansible">Ansible</a></li>
+        <li><a href="#creating-an-interface">Create an Interface</a></li>
+    </ul>
     <li><a href="#roadmap">Roadmap</a></li>
   </ol>
 </details>
@@ -49,7 +53,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![Product Name Screen Shot][product-screenshot]]
+![Product Name Screen Shot][product-screenshot]
 
 This project aims to automate the maintenance of a Cisco Router using a webex chatbot.
 
@@ -79,34 +83,15 @@ To get started, make sure you have Python installed. In addition you will need t
 Make sure that you have Python installed on your machine. <br />
 Feel free to follow the tutorials listed below. <br /> 
 
-* Windows Instructions
-  ```sh
-  https://www.digitalocean.com/community/tutorials/install-python-windows-10
-  ```
-* Linux Install
-  ```sh
-  https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-programming-environment-on-an-ubuntu-20-04-server
-  ```
-* Mac OS Install
-  ```sh
-  https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-macos
-  ```
 
 Download the following libraries
-* pyyaml
+* pyyaml paramiko webexteamsbot
   ```sh
   pip3 install pyyaml
-  ```
-
-* paramiko
-  ```sh
   pip3 install paramiko
-  ```
-
-* webexteamsbot
-  ```sh
   pip3 install webexteamsbot
   ```
+
 This runs on a flask server, so you'll want to ensure that you have that ready to go. <br />
 * Flask
   ```sh
@@ -132,21 +117,27 @@ With that taken care of, the last prerequisite will be to download Ansible
 ### Installation
 
 1. Clone the repo
-   ```sh
-   git clone https://github.com/FuriousBH/381-Final.git
-   ```
+
 
 2. Set up a webex bot.
-
-
-3. Navigate to the Directory with the main.py app <br>
-![PWD][PWD-screenshot]]
-
-  <br/> 
     ```sh
-    python3 main.py
+    https://developer.webex.com/docs/bots
     ```
 
+
+3. Navigate to the Directory with the 381Bot.py app <br>
+![PWD][PWD-screenshot]
+
+4. Modify the routers.py dictionary to match your devices & the Ansible hosts file with the address of the Branch Router.<br>
+
+![Router][Routers-screenshot]
+<br>
+![ANSIBLE][AnsibleHosts-screenshot]
+
+5. Update your Bot URL with the relevant ngrok Forwarding URL.
+![Ngrok][Ngrok-screenshot]
+<br>
+![BotUrl][BotUrl-screenshot]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -155,10 +146,38 @@ With that taken care of, the last prerequisite will be to download Ansible
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-This is where we'll show examples of what the chatbot can do. <br>
-Things like configuring an interface or pulling information from the router.
+### Ansible
+1.  Using the "show run *router name*" command in the chatbot will issue the command "show ip interface brief" on the router specified in the host file.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+![image](https://user-images.githubusercontent.com/99046455/206283453-e7c4cab2-8b1c-4730-9b16-d1075c62a712.png)
+
+2. After that command is succesfully issued, it will save the output into a text file "rShowRun.txt"
+3. Pay special attention to line 19, or if we are using a list value [18], it contains the updated IP of the interface
+
+![image](https://user-images.githubusercontent.com/99046455/206273954-4c8dbae6-9010-4964-857f-ce941fdf82a8.png)
+
+4. Now using the "update vars" command with the chat bot, the rShowRun.txt file will be read, split into lines, then line 18 will be split by the blank character ' ' which allows us to specifically grab the IP address we want. Lastly, that command will update the vars.yaml file with the new IP address, and move the previous IP to the oldIP variable.
+
+![image](https://user-images.githubusercontent.com/99046455/206283197-c2a1f125-dc3e-4d4b-93b6-0ab60a5bdf05.png)
+
+5. Finally, the "update tunnel" chat bot command will issue a shell command that will trigger the ansible playbook "updateTunnel-playbook.yaml" which will update the tunnel information of the router who is trying to peer with the dynamically changing router from the branch site.
+
+![image](https://user-images.githubusercontent.com/99046455/206282598-6fe9be3d-b493-4fc4-8eb0-cd68c7abc5df.png)
+
+6. With those commands the chatbot did the following: grab the ip interface information, updated the rShowRun.txt file with the new info, updated the vars.yaml file with the new IP info, then used Ansible to update the HQ router's crypto isakmp information with the new peer's IP address.
+
+### Creating an Interface
+1. By sending the command "make int" to the bot, you will be presented with a Webex Card.
+
+
+2. Fill out the appropriate information (You need to use proper case)
+
+![image][Card-screenshot]
+![image][CardComplete-screenshot]
+
+3. Verify that the interface has been configured.
+
+![image][CardIPBrief-screenshot]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -168,7 +187,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 ## Roadmap
 
 - [This is optional] Let me know if we want this section
-
+<br>Theoreticals and implementations. Two of Guilleman's favorite things...
 
 
 <!-- CONTRIBUTING -->
@@ -198,54 +217,13 @@ Thought it might be kind of nice.
 [Flask.js]: https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white
 [flask-url]: https://flask.palletsprojects.com/en/2.2.x/
 [PWD-screenshot]: images/PWD.png
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### Local Setup
-1.   Install ruamel.yaml or pyyaml by issuing this command in the terminal: pip3 install ruamel.yaml OR pip3 install pyyaml, this is important for being able to update yaml files. ruamel.yaml is important for being able to open, modify, and save yaml files from within a python script.
-
-![installPyYAML](https://user-images.githubusercontent.com/99046455/204409091-39012aad-ea3a-404a-8c72-c99aaac3d527.png)
-
-2.   
-
-### Ansible
-1.  Ensure that you have installed Ansible onto your device with the command, "python3 -m pip install --user ansible"
-2.  Using the "show run *router name*" command in the chatbot will issue the command "show ip interface brief" on the router specified in the host file.
-
-![image](https://user-images.githubusercontent.com/99046455/206283453-e7c4cab2-8b1c-4730-9b16-d1075c62a712.png)
-
-3. After that command is succesfully issued, it will save the output into a text file "rShowRun.txt"
-4. Pay special attention to line 19, or if we are using a list value [18], it contains the updated IP of the interface
-
-![image](https://user-images.githubusercontent.com/99046455/206273954-4c8dbae6-9010-4964-857f-ce941fdf82a8.png)
-
-6. Now using the "update vars" command with the chat bot, the rShowRun.txt file will be read, split into lines, then line 18 will be split by the blank character ' ' which allows us to specifically grab the IP address we want. Lastly, that command will update the vars.yaml file with the new IP address, and move the previous IP to the oldIP variable.
-
-![image](https://user-images.githubusercontent.com/99046455/206283197-c2a1f125-dc3e-4d4b-93b6-0ab60a5bdf05.png)
-
-8. Finally, the "update tunnel" chat bot command will issue a shell command that will trigger the ansible playbook "updateTunnel-playbook.yaml" which will update the tunnel information of the router who is trying to peer with the dynamically changing router from the branch site.
-
-![image](https://user-images.githubusercontent.com/99046455/206282598-6fe9be3d-b493-4fc4-8eb0-cd68c7abc5df.png)
-
-8. With those commands the chatbot did the following: grab the ip interface information, updated the rShowRun.txt file with the new info, updated the vars.yaml file with the new IP info, then used Ansible to update the HQ router's crypto isakmp information with the new peer's IP address.
-
-
-
+[Routers-screenshot]: images/Routers.png
+[AnsibleHosts-screenshot]: images/Hosts.png
+[Ngrok-screenshot]: images/ngrok.png
+[BotUrl-screenshot]: images/BotUrl.PNG
+[Card-screenshot]: images/IntCard.PNG
+[CardComplete-screenshot]: images/MadeCard.PNG
+[CardIPBrief-screenshot]: images/intBriefCard.PNG
 
 
 ### How this project went:
