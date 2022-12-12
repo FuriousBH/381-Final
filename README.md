@@ -263,7 +263,7 @@ RA - Led the team and developed RESConf skills, useful tools, and general oversi
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/FuriousBH/381-Final
 [contributors-url]: https://github.com/FuriousBH/381-Final/graphs/contributors
-[product-screenshot]: images/ProductScreenshot.PNG
+[product-screenshot]: images/ProductScreenshot.png
 [Python.js]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
 [Python-url]: https://www.python.org
 [Ansible.js]: https://img.shields.io/badge/ansible-%231A1918.svg?style=for-the-badge&logo=ansible&logoColor=white
