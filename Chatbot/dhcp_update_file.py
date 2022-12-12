@@ -3,8 +3,8 @@ import core_skills as Core
 
 def run(incoming_msg):
     # workaround for Keith's auto update
-    if incoming_msg is 'r1':
-        router='r1'
+    if incoming_msg is 'r2':
+        router='r2'
     else:
         router = Core.to_text(incoming_msg)
     # end workaround

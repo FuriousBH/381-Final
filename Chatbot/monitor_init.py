@@ -7,9 +7,8 @@ import os
 import ansible_skills
 
 path_command=os.path.dirname(os.path.realpath(__file__))
-print(path_command)
 py_command = ('python3 '+f'{path_command}/monitor_auto.py')
-comment = 'VPN_CSR1'
+comment = 'VPN_CSR2'
 ip_net='172.16.0.'
 
 def dhcp_info(incoming_msg):
@@ -25,36 +24,31 @@ def dhcp_info(incoming_msg):
 
 def delete_cron():
     cron_del=cron_sched.del_cron(comment)
-    # print(cron_del)
     return cron_del
-# Insert Time Alternative Method Here
 
+router_dev='r2'
 def run(incoming_msg):
     # Delete Cron Jobs
     cron_del=cron_sched.del_cron(comment)
-    # print(cron_del)
     router_select=incoming_msg
-    # Create Cron Jobs
-    # 1. Find DHCP timers
+# 1. Find DHCP timers
     ip_found,interval_time,time_to=dhcp_info(router_select)
-    vpn_ip_test=(ip_found) in ip_net
-    # print(vpn_ip_test)
-    # if vpn_ip_test and interval_time==0 and time_to==0:
-    #     print(f'EXPECTED IP NET {ip_net} NOT FOUND')
-    #     #FATAL ERROR
-    #     # response.markdown += str(f"{cron_del} and slept for {time_to}. {cron_create}")
-    #     return (f'EXPECTED IP NET {ip_net} NOT FOUND')
-    # 2. Create Cron Job
-    # Sleep Create Run
+# 2. Create Cron Job
+        # Sleep Create Run
     print(f'Sleeping for {time_to}')
     sleep(time_to)
     cron_create=cron_sched.create_cron(interval_time,py_command,comment)
-    # print(cron_create)
     cron_sched.run_cron(comment,py_command)
-    #Invoke Ansible Here
-    resp1=(f'{cron_del}  and slept for  {time_to}. {cron_create}')
+        #Invoke Ansible Here
+    # update rShowRun.txt
+    ans_resp1=ansible_skills.show_ip_brief(router_dev)
+    # update vars.yaml
+    ans_resp2=ansible_skills.update_vars(router_dev)
+    # update tunnel info w/ playbook
+    ans_resp3=ansible_skills.update_tunnel()
+    resp1=(f'{cron_del}  and slept for  {time_to}. {cron_create}\n {ans_resp1}\n{ans_resp2}\n{ans_resp3}')
     return resp1
-#Insert alternative threading module here
+
 
 # Time Alternative Method
 # def internal_cron_create():
@@ -66,6 +60,3 @@ def run(incoming_msg):
     # return
 #alternative threading module here
 # t=Timer(time_to,internal_cron_create())
-
-# if __name__ == '__main__':
-    # main()

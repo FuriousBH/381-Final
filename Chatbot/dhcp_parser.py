@@ -4,7 +4,7 @@
 
 def find_new_dhcp_ip(expected_ip_net):
     #Internal Router that changes DHCP file
-    file='Outputs/r1dhcp_lease.txt'
+    file='Outputs/r2dhcp_lease.txt'
     #Lines to find
     ip_addr_pre='Temp IP addr: '
     renewal_time='Renewal: '

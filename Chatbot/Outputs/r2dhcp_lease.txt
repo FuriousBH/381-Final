@@ -1,4 +1,4 @@
-
+C
 *                                           *
 **                                         **
 ***                                       ***
@@ -13,16 +13,26 @@
 
 
 
-CSR1kv#terminal length 0
-CSR1kv#show dhcp lease
+CSR2#terminal length 0
+CSR2#show dhcp lease
+Temp IP addr: 192.168.56.106  for peer on Interface: GigabitEthernet1
+Temp  sub net mask: 255.255.255.0
+   DHCP Lease server: 192.168.56.128, state: 5 Bound
+   DHCP transaction id: C69
+   Lease: 1800 secs,  Renewal: 900 secs,  Rebind: 1575 secs
+   Next timer fires after: 00:01:19
+   Retry count: 0   Client-ID: cisco-000c.2921.1033-Gi1
+   Client-ID hex dump: 636973636F2D303030632E323932312E
+                       313033332D476931
+   Hostname: CSR2
 Temp IP addr: 172.16.0.3  for peer on Interface: GigabitEthernet2
 Temp  sub net mask: 255.255.255.0
    DHCP Lease server: 172.16.0.15, state: 5 Bound
-   DHCP transaction id: 265B
+   DHCP transaction id: E0D
    Lease: 180 secs,  Renewal: 90 secs,  Rebind: 157 secs
-   Next timer fires after: 00:00:25
+   Next timer fires after: 00:00:34
    Retry count: 0   Client-ID: cisco-000c.2921.103d-Gi2
    Client-ID hex dump: 636973636F2D303030632E323932312E
                        313033642D476932
-   Hostname: CSR1kv
-CSR1kv#
+   Hostname: CSR2
+CSR2#

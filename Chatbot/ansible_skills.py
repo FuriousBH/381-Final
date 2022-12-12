@@ -47,8 +47,12 @@ def update_tunnel():
     return f'Ran Update Tunnel Playbook\n'
 
 def show_ip_brief(incoming_msg):
-    router= Core.to_text(incoming_msg)
-    router = Core.command_parser(router)
+    if incoming_msg!='r2':
+        router= Core.to_text(incoming_msg)
+        router = Core.command_parser(router)
+    else:
+        router=incoming_msg
+    
     username, password, address = Core.router_needs(router)
     
     f = open(fileRShowRun, 'w')
