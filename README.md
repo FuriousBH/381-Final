@@ -57,7 +57,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![Product Name Screen Shot][product-screenshot]
+![ProductNameScreenShot][product-screenshot]
 
 This project aims to automate the maintenance of a Cisco Router using a webex chatbot.
 
