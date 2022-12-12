@@ -253,6 +253,13 @@ dhcp_parser.py, monitor_init.py, monitor_auto.py
 RA - Led the team and developed RESConf skills, useful tools, and general oversite over production.
 <br>BH - developed Ansible solution.
 <br>KG - developed Monitoring solution and integration with Ansible.
+<br><br>
+If you would like to contribute, please make a Fork & submit a Pull request!
+<br>
+
+THANKS!
+<br>
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
